@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_11bp1p5" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.38.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <decision id="analisisCalidadDmn" name="Decision 1" camunda:historyTimeToLive="180">
+    <decisionTable id="DecisionTable_1s8u71z" hitPolicy="FIRST">
+      <input id="Input_1" label="Fecha de vencimiento">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>fechaVencimiento</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_154ug5f" label="Estado de sello">
+        <inputExpression id="LiteralExpression_12y1uiu" typeRef="boolean">
+          <text>estadoSello</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1tzfw7t" label="Hay daño">
+        <inputExpression id="LiteralExpression_14il4a5" typeRef="boolean">
+          <text>estadoFisico</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="estado" typeRef="string" biodi:width="192" />
+      <rule id="DecisionRule_1v5kfj3">
+        <inputEntry id="UnaryTests_1cxz7ic">
+          <text>date(fechaVencimiento) &gt; (today() + duration("P-30D"))
+</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_01yqa8v">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_12bt286">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1nbfncj">
+          <text>"Aceptado"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_18tqfoq">
+        <inputEntry id="UnaryTests_03fa56f">
+          <text>date(fechaVencimiento) &gt; (today() + duration("P-30D"))
+</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03j1qvl">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_179oni3">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0gxwpqc">
+          <text>"Rechazado"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_166ksjn">
+        <inputEntry id="UnaryTests_0ut562a">
+          <text>date(fechaVencimiento) &gt; (today() + duration("P-30D"))
+</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_02x82m7">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0y8l6x0">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0a3cptc">
+          <text>"Rechazado"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0il681k">
+        <inputEntry id="UnaryTests_095in73">
+          <text>date(fechaVencimiento) &gt; (today() + duration("P-30D"))</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0omrypi">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_10ja4e9">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1jtegqx">
+          <text>"Rechazado"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_007ic1k">
+        <inputEntry id="UnaryTests_1sp9m8t">
+          <text>date(fechaVencimiento) &lt;= (today() + duration("P-30D"))
+</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_18zpuf0">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xiomfx">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02ds3bw">
+          <text>"Rechazado"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_15t74hl">
+        <inputEntry id="UnaryTests_0vs3078">
+          <text>date(fechaVencimiento) &lt;= (today() + duration("P-30D"))
+</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0t7v8mf">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vjh70c">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ywi7sz">
+          <text>"Rechazado"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0onkf95">
+        <inputEntry id="UnaryTests_1xv2vp9">
+          <text>date(fechaVencimiento) &lt;= (today() + duration("P-30D"))
+</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0impx5r">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ywlu6m">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ujwl7s">
+          <text>"Rechazado"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_000hcrk">
+        <inputEntry id="UnaryTests_1mjmib3">
+          <text>date(fechaVencimiento) &lt;= (today() + duration("P-30D"))
+</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gy1k2t">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_12tpzi4">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_07mw15b">
+          <text>"Rechazado"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="analisisCalidadDmn">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
