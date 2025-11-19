@@ -1,0 +1,72 @@
+{
+  "components": [
+    {
+      "text": "# Solicitud de Devolución",
+      "type": "text",
+      "layout": {
+        "row": "Row_1kxo5qu",
+        "columns": null
+      },
+      "id": "Field_054bza8"
+    },
+    {
+      "label": "Identificación de Factura",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_18cui04",
+        "columns": null
+      },
+      "id": "Field_0y70qvt",
+      "key": "facturaId"
+    },
+    {
+      "label": "Identificación de Lote",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_03k36tc",
+        "columns": null
+      },
+      "id": "Field_04vi187",
+      "key": "loteId"
+    },
+    {
+      "label": "Motivo",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_1rxh7is",
+        "columns": null
+      },
+      "id": "Field_0wbekyi",
+      "key": "motivo"
+    },
+    {
+      "label": "Tipo de Solicitud",
+      "values": [
+        {
+          "label": "Reposición",
+          "value": "reposicion"
+        },
+        {
+          "label": "Reembolso",
+          "value": "reembolso"
+        }
+      ],
+      "type": "radio",
+      "layout": {
+        "row": "Row_0gj5c1e",
+        "columns": null
+      },
+      "id": "Field_1pb2la1",
+      "key": "tipoSolicitud"
+    }
+  ],
+  "type": "default",
+  "id": "solicitudDevolucion",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.38.1"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "schemaVersion": 19
+}
