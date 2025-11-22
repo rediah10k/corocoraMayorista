@@ -1,0 +1,96 @@
+{
+  "components": [
+    {
+      "text": "# Agendar Envío",
+      "type": "text",
+      "layout": {
+        "row": "Row_1kxo5qu",
+        "columns": null
+      },
+      "id": "Field_054bza8"
+    },
+    {
+      "label": "Nombre de Cliente",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0tnpjjd",
+        "columns": null
+      },
+      "id": "Field_1cfzv91",
+      "key": "nombreCliente",
+      "readonly": true
+    },
+    {
+      "label": "Dirección Cliente",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_05sv7ey",
+        "columns": null
+      },
+      "id": "Field_17x8jf5",
+      "key": "direccionCliente",
+      "readonly": true
+    },
+    {
+      "label": "Plazo Máximo",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0fgvg4o",
+        "columns": null
+      },
+      "id": "Field_0ir25dq",
+      "key": "plazoMaximoStr",
+      "readonly": true,
+      "disabled": true
+    },
+    {
+      "type": "separator",
+      "layout": {
+        "row": "Row_023cuqn",
+        "columns": null
+      },
+      "id": "Field_0reh6k7"
+    },
+    {
+      "subtype": "datetime",
+      "dateLabel": "Fecha de Envio",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_09lrf8t",
+        "columns": null
+      },
+      "id": "Field_134lufj",
+      "key": "fechaHoraEnvio",
+      "disallowPassedDates": true,
+      "validate": {
+        "required": false
+      },
+      "properties": {},
+      "timeLabel": "Hora",
+      "timeSerializingFormat": "utc_offset",
+      "timeInterval": 1,
+      "use24h": true
+    },
+    {
+      "text": "#### Fecha inválida !!",
+      "type": "text",
+      "layout": {
+        "row": "Row_0c73nod",
+        "columns": 4
+      },
+      "id": "Field_0phhw4c",
+      "conditional": {
+        "hide": "=fechaHoraValida"
+      }
+    }
+  ],
+  "type": "default",
+  "id": "agendarEnvio",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.38.1"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "schemaVersion": 19
+}
