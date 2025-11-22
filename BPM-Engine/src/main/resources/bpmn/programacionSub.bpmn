@@ -17,9 +17,9 @@
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1rk7li9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1lr65g8</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_0hv06z0</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ut4hv3</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0sdzqn5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0hv06z0</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:businessRuleTask id="Activity_1ib4p4m" name="Determinar plazo máximo" camunda:resultVariable="plazoEnDias" camunda:decisionRef="plazoEnDias" camunda:mapDecisionResult="singleEntry">
@@ -193,11 +193,6 @@ outputFormat.format(calendar.getTime())</camunda:script>
       <bpmn:incoming>Flow_0uks790</bpmn:incoming>
       <bpmn:outgoing>Flow_1gyrup0</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="Gateway_0hv06z0">
-      <bpmn:incoming>Flow_1gyrup0</bpmn:incoming>
-      <bpmn:outgoing>Flow_1laamh4</bpmn:outgoing>
-      <bpmn:outgoing>Flow_18oh929</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
     <bpmn:task id="Activity_1ut4hv3" name="Confirmar preparación de envío">
       <bpmn:incoming>Flow_0sy0ho7</bpmn:incoming>
       <bpmn:outgoing>Flow_1u69mcw</bpmn:outgoing>
@@ -208,6 +203,11 @@ outputFormat.format(calendar.getTime())</camunda:script>
         <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R/${fechaHoraInicioRecordatorio}/PT1M</bpmn:timeCycle>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
+    <bpmn:exclusiveGateway id="Gateway_0hv06z0">
+      <bpmn:incoming>Flow_1gyrup0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1laamh4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_18oh929</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1sgqzqw">
@@ -267,11 +267,11 @@ outputFormat.format(calendar.getTime())</camunda:script>
         <dc:Bounds x="810" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0hv06z0_di" bpmnElement="Gateway_0hv06z0" isMarkerVisible="true">
-        <dc:Bounds x="965" y="155" width="50" height="50" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1yx5av8_di" bpmnElement="Activity_1ut4hv3">
         <dc:Bounds x="1420" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0hv06z0_di" bpmnElement="Gateway_0hv06z0" isMarkerVisible="true">
+        <dc:Bounds x="995" y="155" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0wq8b6i_di" bpmnElement="Event_0sdzqn5">
         <dc:Bounds x="1422" y="142" width="36" height="36" />
@@ -285,13 +285,12 @@ outputFormat.format(calendar.getTime())</camunda:script>
         <di:waypoint x="745" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1laamh4_di" bpmnElement="Flow_1laamh4">
-        <di:waypoint x="1015" y="180" />
-        <di:waypoint x="1030" y="180" />
-        <di:waypoint x="1030" y="260" />
+        <di:waypoint x="1020" y="205" />
+        <di:waypoint x="1020" y="260" />
         <di:waypoint x="770" y="260" />
         <di:waypoint x="770" y="205" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1033" y="203" width="14" height="14" />
+          <dc:Bounds x="1036" y="213" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0uks790_di" bpmnElement="Flow_0uks790">
@@ -300,17 +299,17 @@ outputFormat.format(calendar.getTime())</camunda:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1gyrup0_di" bpmnElement="Flow_1gyrup0">
         <di:waypoint x="910" y="180" />
-        <di:waypoint x="965" y="180" />
+        <di:waypoint x="995" y="180" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="906" y="146" width="74" height="27" />
+          <dc:Bounds x="924" y="146" width="74" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_18oh929_di" bpmnElement="Flow_18oh929">
-        <di:waypoint x="990" y="155" />
-        <di:waypoint x="990" y="120" />
+        <di:waypoint x="1020" y="155" />
+        <di:waypoint x="1020" y="120" />
         <di:waypoint x="1160" y="120" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1014" y="103" width="10" height="14" />
+          <dc:Bounds x="1039" y="103" width="10" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0sy0ho7_di" bpmnElement="Flow_0sy0ho7">

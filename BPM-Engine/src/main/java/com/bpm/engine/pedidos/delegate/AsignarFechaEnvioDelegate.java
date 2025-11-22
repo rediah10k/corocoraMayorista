@@ -28,7 +28,7 @@ public class AsignarFechaEnvioDelegate implements JavaDelegate {
         try {
 
             String fechaHoraEnvio = (String) execution.getVariable("fechaHoraEnvioO");
-            Long pedidoId = (Long) execution.getVariable("envioIdSub");
+            Long pedidoId = (Long) execution.getVariable("pedidoIdSub");
 
 
             if (pedidoId == null) {
