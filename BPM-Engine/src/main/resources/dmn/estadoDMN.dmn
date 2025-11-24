@@ -20,8 +20,7 @@
       <output id="Output_1" name="estado" typeRef="string" biodi:width="192" />
       <rule id="DecisionRule_1v5kfj3">
         <inputEntry id="UnaryTests_1cxz7ic">
-          <text>date(fechaVencimiento) &gt; (today() + duration("P-30D"))
-</text>
+          <text>date(fechaVencimiento) &gt; (today() + duration("P30D"))</text>
         </inputEntry>
         <inputEntry id="UnaryTests_01yqa8v">
           <text>true</text>
@@ -35,8 +34,7 @@
       </rule>
       <rule id="DecisionRule_18tqfoq">
         <inputEntry id="UnaryTests_03fa56f">
-          <text>date(fechaVencimiento) &gt; (today() + duration("P-30D"))
-</text>
+          <text>date(fechaVencimiento) &gt; (today() + duration("P30D"))</text>
         </inputEntry>
         <inputEntry id="UnaryTests_03j1qvl">
           <text>false</text>
@@ -50,8 +48,7 @@
       </rule>
       <rule id="DecisionRule_166ksjn">
         <inputEntry id="UnaryTests_0ut562a">
-          <text>date(fechaVencimiento) &gt; (today() + duration("P-30D"))
-</text>
+          <text>date(fechaVencimiento) &gt; (today() + duration("P30D"))</text>
         </inputEntry>
         <inputEntry id="UnaryTests_02x82m7">
           <text>true</text>
@@ -65,7 +62,7 @@
       </rule>
       <rule id="DecisionRule_0il681k">
         <inputEntry id="UnaryTests_095in73">
-          <text>date(fechaVencimiento) &gt; (today() + duration("P-30D"))</text>
+          <text>date(fechaVencimiento) &gt; (today() + duration("P30D"))</text>
         </inputEntry>
         <inputEntry id="UnaryTests_0omrypi">
           <text>false</text>
@@ -79,8 +76,7 @@
       </rule>
       <rule id="DecisionRule_007ic1k">
         <inputEntry id="UnaryTests_1sp9m8t">
-          <text>date(fechaVencimiento) &lt;= (today() + duration("P-30D"))
-</text>
+          <text>date(fechaVencimiento) &lt;= (today() + duration("P30D"))</text>
         </inputEntry>
         <inputEntry id="UnaryTests_18zpuf0">
           <text>true</text>
@@ -94,8 +90,7 @@
       </rule>
       <rule id="DecisionRule_15t74hl">
         <inputEntry id="UnaryTests_0vs3078">
-          <text>date(fechaVencimiento) &lt;= (today() + duration("P-30D"))
-</text>
+          <text>date(fechaVencimiento) &lt;= (today() + duration("P30D"))</text>
         </inputEntry>
         <inputEntry id="UnaryTests_0t7v8mf">
           <text>true</text>
@@ -109,8 +104,7 @@
       </rule>
       <rule id="DecisionRule_0onkf95">
         <inputEntry id="UnaryTests_1xv2vp9">
-          <text>date(fechaVencimiento) &lt;= (today() + duration("P-30D"))
-</text>
+          <text>date(fechaVencimiento) &lt;= (today() + duration("P30D"))</text>
         </inputEntry>
         <inputEntry id="UnaryTests_0impx5r">
           <text>false</text>
@@ -124,8 +118,7 @@
       </rule>
       <rule id="DecisionRule_000hcrk">
         <inputEntry id="UnaryTests_1mjmib3">
-          <text>date(fechaVencimiento) &lt;= (today() + duration("P-30D"))
-</text>
+          <text>date(fechaVencimiento) &lt;= (today() + duration("P30D"))</text>
         </inputEntry>
         <inputEntry id="UnaryTests_0gy1k2t">
           <text>false</text>

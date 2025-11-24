@@ -37,7 +37,7 @@
         "columns": null
       },
       "id": "Field_0wbekyi",
-      "key": "comentarios"
+      "key": "motivo"
     },
     {
       "label": "Tipo de Solicitud",
@@ -64,7 +64,7 @@
   "id": "solicitudDevolucion",
   "exporter": {
     "name": "Camunda Modeler",
-    "version": "5.39.0"
+    "version": "5.38.1"
   },
   "executionPlatform": "Camunda Platform",
   "executionPlatformVersion": "7.23.0",

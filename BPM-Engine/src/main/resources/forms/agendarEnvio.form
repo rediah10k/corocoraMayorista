@@ -10,28 +10,6 @@
       "id": "Field_054bza8"
     },
     {
-      "label": "Nombre de Cliente",
-      "type": "textfield",
-      "layout": {
-        "row": "Row_0tnpjjd",
-        "columns": null
-      },
-      "id": "Field_1cfzv91",
-      "key": "nombreCliente",
-      "readonly": true
-    },
-    {
-      "label": "Dirección Cliente",
-      "type": "textfield",
-      "layout": {
-        "row": "Row_05sv7ey",
-        "columns": null
-      },
-      "id": "Field_17x8jf5",
-      "key": "direccionCliente",
-      "readonly": true
-    },
-    {
       "label": "Plazo Máximo",
       "type": "textfield",
       "layout": {
@@ -72,11 +50,11 @@
       "use24h": true
     },
     {
-      "text": "#### Fecha inválida !!",
+      "text": "#### Fecha inválida !",
       "type": "text",
       "layout": {
         "row": "Row_0c73nod",
-        "columns": 4
+        "columns": 8
       },
       "id": "Field_0phhw4c",
       "conditional": {

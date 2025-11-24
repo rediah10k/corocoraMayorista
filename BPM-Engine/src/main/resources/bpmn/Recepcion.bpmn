@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1sh6gjs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.39.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1sh6gjs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.38.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
   <bpmn:collaboration id="Collaboration_1r6t2tr">
-    <bpmn:participant id="Participant_0b4id71" name="Mayorista Corocora" processRef="abastecimientoProcess" />
+    <bpmn:participant id="Participant_0b4id71" name="Mayorista Corocora" processRef="Process_1btr9mo" />
   </bpmn:collaboration>
-  <bpmn:process id="abastecimientoProcess" name="abastecimientoProcess" isExecutable="true" camunda:historyTimeToLive="180">
+  <bpmn:process id="Process_1btr9mo" name="abastecimientoProcess" isExecutable="true" camunda:historyTimeToLive="180">
     <bpmn:laneSet id="LaneSet_1s0c8m9">
       <bpmn:lane id="Lane_0s4krsb" name="Centro de distribución">
         <bpmn:flowNodeRef>Gateway_1vcbb4a</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0kq4ct3</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0kmdyl7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1cje2e5</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_19e1s7f</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_07qzx9o</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_08h7h65</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1lbtes2</bpmn:flowNodeRef>
@@ -19,8 +21,6 @@
         <bpmn:flowNodeRef>Gateway_0uaotrp</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ebymf5</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_06ajy6z</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0kq4ct3</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0zilvl1" name="Comercial Corocora">
         <bpmn:flowNodeRef>Activity_0qre93t</bpmn:flowNodeRef>
@@ -36,6 +36,10 @@
       <bpmn:outgoing>Flow_0v80p74</bpmn:outgoing>
       <bpmn:outgoing>Flow_08jyq96</bpmn:outgoing>
     </bpmn:exclusiveGateway>
+    <bpmn:manualTask id="Activity_0kq4ct3" name="Rotular productos">
+      <bpmn:incoming>Flow_1srvpu4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0z1c5dh</bpmn:outgoing>
+    </bpmn:manualTask>
     <bpmn:userTask id="Activity_0kmdyl7" name="Almacenar en zona de baja rotación">
       <bpmn:extensionElements>
         <camunda:formData>
@@ -63,6 +67,10 @@
       <bpmn:incoming>Flow_15rpebd</bpmn:incoming>
       <bpmn:outgoing>Flow_02thdct</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:startEvent id="StartEvent_1" name="Lote de productos recibido">
+      <bpmn:outgoing>Flow_15rpebd</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0dbcpcn" messageRef="Message_09occ0m" />
+    </bpmn:startEvent>
     <bpmn:subProcess id="Activity_07qzx9o" name="Generar etiquetado para CEDIS">
       <bpmn:incoming>Flow_1rjp75g</bpmn:incoming>
       <bpmn:outgoing>Flow_1srvpu4</bpmn:outgoing>
@@ -174,13 +182,6 @@
       <bpmn:incoming>Flow_02thdct</bpmn:incoming>
       <bpmn:outgoing>Flow_1e5ty3j</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:startEvent id="StartEvent_1" name="Lote de productos recibido">
-      <bpmn:outgoing>Flow_15rpebd</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:userTask id="Activity_0kq4ct3" name="Rotular productos">
-      <bpmn:incoming>Flow_1srvpu4</bpmn:incoming>
-      <bpmn:outgoing>Flow_0z1c5dh</bpmn:outgoing>
-    </bpmn:userTask>
   </bpmn:process>
   <bpmn:message id="Message_09occ0m" name="Mensaje_Inicio" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -204,6 +205,9 @@
       <bpmndi:BPMNShape id="Gateway_1vcbb4a_di" bpmnElement="Gateway_1vcbb4a" isMarkerVisible="true">
         <dc:Bounds x="1374" y="295" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0h08tzb_di" bpmnElement="Activity_0kq4ct3">
+        <dc:Bounds x="1213" y="280" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_18jio12_di" bpmnElement="Activity_0kmdyl7">
         <dc:Bounds x="1493" y="280" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -214,14 +218,11 @@
         <dc:Bounds x="255" y="205" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0az1zgm_di" bpmnElement="StartEvent_1">
+      <bpmndi:BPMNShape id="Event_0jauub4_di" bpmnElement="StartEvent_1">
         <dc:Bounds x="187" y="227" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="162" y="270" width="89" height="27" />
+          <dc:Bounds x="181" y="270" width="51" height="40" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0dgpnj8_di" bpmnElement="Activity_0kq4ct3">
-        <dc:Bounds x="1220" y="280" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_124oogv_di" bpmnElement="Activity_07qzx9o">
         <dc:Bounds x="1063" y="280" width="100" height="80" />
@@ -262,10 +263,10 @@
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0z1c5dh_di" bpmnElement="Flow_0z1c5dh">
-        <di:waypoint x="1320" y="320" />
+        <di:waypoint x="1313" y="320" />
         <di:waypoint x="1374" y="320" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1299" y="233" width="89" height="14" />
+          <dc:Bounds x="1296" y="233" width="88" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0v80p74_di" bpmnElement="Flow_0v80p74">
@@ -306,7 +307,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1srvpu4_di" bpmnElement="Flow_1srvpu4">
         <di:waypoint x="1163" y="320" />
-        <di:waypoint x="1220" y="320" />
+        <di:waypoint x="1213" y="320" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1qtk0u3_di" bpmnElement="Flow_1qtk0u3">
         <di:waypoint x="1665" y="245" />

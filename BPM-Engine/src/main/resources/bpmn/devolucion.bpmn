@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0nmsaqa" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.38.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
   <bpmn:collaboration id="Collaboration_1n2cwaz">
-    <bpmn:participant id="Participant_0g8yi8y" name="Mayorista Corocora" processRef="devolucion" />
+    <bpmn:participant id="Participant_0g8yi8y" name="Mayorista Corocora" processRef="devolucionProcess" />
   </bpmn:collaboration>
-  <bpmn:process id="devolucion" isExecutable="true" camunda:jobPriority="1" camunda:historyTimeToLive="180" camunda:taskPriority="1">
+  <bpmn:process id="devolucionProcess" isExecutable="true" camunda:jobPriority="1" camunda:historyTimeToLive="180" camunda:taskPriority="1">
     <bpmn:laneSet id="LaneSet_0selc97">
       <bpmn:lane id="Lane_0oyb6op" name="Cliente">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
@@ -176,12 +176,12 @@
         <dc:Bounds x="155" y="80" width="2620" height="1100" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0oyb6op_di" bpmnElement="Lane_0oyb6op" isHorizontal="true">
-        <dc:Bounds x="185" y="80" width="2590" height="280" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0dlxabj_di" bpmnElement="Lane_0dlxabj" isHorizontal="true">
         <dc:Bounds x="185" y="360" width="2590" height="820" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0oyb6op_di" bpmnElement="Lane_0oyb6op" isHorizontal="true">
+        <dc:Bounds x="185" y="80" width="2590" height="280" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">

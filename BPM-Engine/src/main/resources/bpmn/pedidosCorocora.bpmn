@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="Camunda Modeler" exporterVersion="5.39.0">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="Camunda Modeler" exporterVersion="5.38.1">
   <collaboration id="pedidoCorocora">
     <participant id="Participant_1fwm4ee" name="COROCORA MAYORISTA" processRef="corocoraMayorista" />
   </collaboration>
-  <process id="corocoraMayorista" name="procesoPedidos" isExecutable="true" camunda:historyTimeToLive="60">
+  <process id="corocoraMayorista" name="pedidoProcess" isExecutable="true" camunda:historyTimeToLive="60">
     <laneSet id="LaneSet_0feg4b2">
       <lane id="Lane_1dhzro0" name="CLIENTE">
         <flowNodeRef>StartEvent_1y45yut</flowNodeRef>
         <flowNodeRef>Task_1hcentk</flowNodeRef>
       </lane>
       <lane id="Lane_1kco2od" name="TRANSPORTE">
-        <flowNodeRef>Event_1rtmzda</flowNodeRef>
-        <flowNodeRef>Activity_1vjxpvl</flowNodeRef>
         <flowNodeRef>Activity_0ji2y08</flowNodeRef>
         <flowNodeRef>Activity_05asviw</flowNodeRef>
+        <flowNodeRef>Activity_00rsnhs</flowNodeRef>
         <flowNodeRef>Gateway_13l3zm9</flowNodeRef>
+        <flowNodeRef>Event_1rtmzda</flowNodeRef>
         <flowNodeRef>Gateway_0el7ev1</flowNodeRef>
         <flowNodeRef>Activity_03r9qeg</flowNodeRef>
-        <flowNodeRef>Activity_00rsnhs</flowNodeRef>
       </lane>
       <lane id="Lane_145hwax" name="ÁREA LOGISTICA">
         <flowNodeRef>Activity_1kyig4b</flowNodeRef>
@@ -30,18 +29,12 @@
         <flowNodeRef>Activity_0xyf2pj</flowNodeRef>
         <flowNodeRef>Activity_176j83e</flowNodeRef>
         <flowNodeRef>Activity_0eajcdz</flowNodeRef>
+        <flowNodeRef>Activity_1ymz5as</flowNodeRef>
       </lane>
     </laneSet>
     <startEvent id="StartEvent_1y45yut" name="Solicitud de productos iniciada" camunda:initiator="">
       <outgoing>SequenceFlow_0h21x7r</outgoing>
     </startEvent>
-    <endEvent id="Event_1rtmzda" name="Pedido enviado">
-      <incoming>Flow_1y82pj2</incoming>
-    </endEvent>
-    <serviceTask id="Activity_1vjxpvl" name="Notificar envío" camunda:expression="${true}">
-      <incoming>Flow_0k7ibs1</incoming>
-      <outgoing>Flow_1xplhhh</outgoing>
-    </serviceTask>
     <userTask id="Activity_0ji2y08" name="Cargar productos">
       <extensionElements>
         <camunda:formData>
@@ -60,6 +53,10 @@
       <incoming>Flow_07ydp5p</incoming>
       <outgoing>Flow_13n1ghs</outgoing>
     </userTask>
+    <serviceTask id="Activity_00rsnhs" name="Confirmar pedido" camunda:expression="${true}">
+      <incoming>Flow_1hom0xl</incoming>
+      <outgoing>Flow_09lux4g</outgoing>
+    </serviceTask>
     <userTask id="Task_1hcentk" name="Llenar formulario de solicitud de productos" camunda:formRef="registrarPedido" camunda:formRefBinding="latest">
       <extensionElements>
         <camunda:inputOutput>
@@ -81,7 +78,7 @@
     <endEvent id="Event_1viiyaw" name="Pedido cancelado">
       <incoming>Flow_00m5t9j</incoming>
     </endEvent>
-    <serviceTask id="Activity_0xyf2pj" name="Notificar cancelación del pedido" camunda:expression="${true}">
+    <serviceTask id="Activity_0xyf2pj" name="Notificar cancelación del pedido" camunda:class="${true}">
       <incoming>Flow_1n5kk5k</incoming>
       <outgoing>Flow_00m5t9j</outgoing>
     </serviceTask>
@@ -100,28 +97,21 @@
     </serviceTask>
     <callActivity id="Activity_1kyig4b" name="Programar envío" calledElement="programacionProcess">
       <extensionElements>
-        <camunda:in sourceExpression="${pedidoId}" target="pedidoIdSub" />
-        <camunda:in sourceExpression="${comentarios}" target="comentariosSub" />
+        <camunda:in sourceExpression="${envioId}" target="envioIdSub" />
       </extensionElements>
       <incoming>Flow_1n9fkqq</incoming>
       <outgoing>Flow_07ydp5p</outgoing>
     </callActivity>
+    <serviceTask id="Activity_151oyoe" name="Notificar confirmación del pedido" camunda:expression="${true}">
+      <incoming>Flow_08zqiwc</incoming>
+      <outgoing>Flow_1n9fkqq</outgoing>
+    </serviceTask>
     <parallelGateway id="Gateway_13l3zm9">
       <incoming>Flow_0pdqqzf</incoming>
-      <outgoing>Flow_0k7ibs1</outgoing>
       <outgoing>Flow_05lqupa</outgoing>
       <outgoing>Flow_1hom0xl</outgoing>
     </parallelGateway>
-    <parallelGateway id="Gateway_0el7ev1">
-      <incoming>Flow_1xplhhh</incoming>
-      <incoming>Flow_1ek5nrc</incoming>
-      <incoming>Flow_09lux4g</incoming>
-      <outgoing>Flow_1y82pj2</outgoing>
-    </parallelGateway>
     <sequenceFlow id="SequenceFlow_0h21x7r" sourceRef="StartEvent_1y45yut" targetRef="Task_1hcentk" />
-    <sequenceFlow id="Flow_1y82pj2" sourceRef="Gateway_0el7ev1" targetRef="Event_1rtmzda" />
-    <sequenceFlow id="Flow_0k7ibs1" sourceRef="Gateway_13l3zm9" targetRef="Activity_1vjxpvl" />
-    <sequenceFlow id="Flow_1xplhhh" sourceRef="Activity_1vjxpvl" targetRef="Gateway_0el7ev1" />
     <sequenceFlow id="Flow_13n1ghs" sourceRef="Activity_05asviw" targetRef="Activity_0ji2y08" />
     <sequenceFlow id="Flow_0pdqqzf" sourceRef="Activity_0ji2y08" targetRef="Gateway_13l3zm9" />
     <sequenceFlow id="Flow_07ydp5p" sourceRef="Activity_1kyig4b" targetRef="Activity_05asviw" />
@@ -140,41 +130,74 @@
     <sequenceFlow id="Flow_1n5kk5k" sourceRef="Activity_176j83e" targetRef="Activity_0xyf2pj" />
     <sequenceFlow id="Flow_1n9fkqq" sourceRef="Activity_151oyoe" targetRef="Activity_1kyig4b" />
     <sequenceFlow id="Flow_05lqupa" sourceRef="Gateway_13l3zm9" targetRef="Activity_03r9qeg" />
-    <sequenceFlow id="Flow_1ek5nrc" sourceRef="Activity_03r9qeg" targetRef="Gateway_0el7ev1" />
-    <serviceTask id="Activity_03r9qeg" name="Emitir factura" camunda:expression="${true}">
-      <extensionElements />
+    <sequenceFlow id="Flow_1vj3xc7" sourceRef="Activity_03r9qeg" targetRef="Gateway_0el7ev1" />
+    <endEvent id="Event_1rtmzda" name="Pedido enviado">
+      <incoming>Flow_1sxu8pk</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_1sxu8pk" sourceRef="Activity_1ymz5as" targetRef="Event_1rtmzda" />
+    <parallelGateway id="Gateway_0el7ev1">
+      <incoming>Flow_09lux4g</incoming>
+      <incoming>Flow_1vj3xc7</incoming>
+      <outgoing>Flow_14zmzi6</outgoing>
+    </parallelGateway>
+    <sequenceFlow id="Flow_14zmzi6" sourceRef="Gateway_0el7ev1" targetRef="Activity_1ymz5as" />
+    <serviceTask id="Activity_03r9qeg" name="Emitir factura">
+      <extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+                <camunda:entry key="Accept">application/pdf</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"nombrecliente":"${clienteNombre}","documentocliente":"${numeroDocumento}","productos":"${productosPedido}"}</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:5000/generate-factura</camunda:inputParameter>
+            <camunda:outputParameter name="pdfUrl">
+              <camunda:script scriptFormat="groovy">import groovy.json.JsonSlurper
+def jsonSlurper = new JsonSlurper()
+def jsonResponse = jsonSlurper.parseText(response)
+return jsonResponse.pdfUrl</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </extensionElements>
       <incoming>Flow_05lqupa</incoming>
-      <outgoing>Flow_1ek5nrc</outgoing>
+      <outgoing>Flow_1vj3xc7</outgoing>
     </serviceTask>
-    <serviceTask id="Activity_151oyoe" name="Notificar confirmación del pedido" camunda:expression="${true}">
-      <incoming>Flow_08zqiwc</incoming>
-      <outgoing>Flow_1n9fkqq</outgoing>
-    </serviceTask>
-    <serviceTask id="Activity_00rsnhs" name="Confirmar pedido" camunda:expression="${true}">
-      <incoming>Flow_1hom0xl</incoming>
-      <outgoing>Flow_09lux4g</outgoing>
-    </serviceTask>
+    <userTask id="Activity_1ymz5as" name="Consultar factura">
+      <extensionElements>
+        <camunda:formData>
+          <camunda:formField id="mensajeUrl" label="URL Factura Generada" type="string" defaultValue="${pdfUrl}" />
+        </camunda:formData>
+      </extensionElements>
+      <incoming>Flow_14zmzi6</incoming>
+      <outgoing>Flow_1sxu8pk</outgoing>
+    </userTask>
   </process>
+  <message id="Message_16due5g" name="Message_16due5g" />
   <bpmndi:BPMNDiagram id="BpmnDiagram_1">
     <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="pedidoCorocora">
       <bpmndi:BPMNShape id="Participant_1fwm4ee_di" bpmnElement="Participant_1fwm4ee" isHorizontal="true">
-        <omgdc:Bounds x="160" y="80" width="2230" height="990" />
+        <omgdc:Bounds x="160" y="80" width="2630" height="990" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1a36b90_di" bpmnElement="Lane_1a36b90" isHorizontal="true">
-        <omgdc:Bounds x="190" y="220" width="2200" height="300" />
+        <omgdc:Bounds x="190" y="220" width="2600" height="300" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_145hwax_di" bpmnElement="Lane_145hwax" isHorizontal="true">
-        <omgdc:Bounds x="190" y="520" width="2200" height="190" />
+        <omgdc:Bounds x="190" y="520" width="2600" height="190" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1kco2od_di" bpmnElement="Lane_1kco2od" isHorizontal="true">
-        <omgdc:Bounds x="190" y="710" width="2200" height="360" />
+        <omgdc:Bounds x="190" y="710" width="2600" height="360" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1dhzro0_di" bpmnElement="Lane_1dhzro0" isHorizontal="true">
-        <omgdc:Bounds x="190" y="80" width="2200" height="140" />
+        <omgdc:Bounds x="190" y="80" width="2600" height="140" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_1y45yut_di" bpmnElement="StartEvent_1y45yut">
@@ -183,21 +206,15 @@
           <omgdc:Bounds x="393" y="175" width="59" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1rtmzda_di" bpmnElement="Event_1rtmzda">
-        <omgdc:Bounds x="2262" y="882" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds x="2242" y="925" width="79" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0ht46ld" bpmnElement="Activity_1vjxpvl">
-        <omgdc:Bounds x="1970" y="725" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0mwlnnj_di" bpmnElement="Activity_0ji2y08">
         <omgdc:Bounds x="1690" y="860" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_19giy7b_di" bpmnElement="Activity_05asviw">
         <omgdc:Bounds x="1530" y="860" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0fjyc7m" bpmnElement="Activity_00rsnhs">
+        <omgdc:Bounds x="1980" y="980" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1c6qxie_di" bpmnElement="Task_1hcentk">
         <omgdc:Bounds x="470" y="110" width="100" height="80" />
@@ -232,39 +249,32 @@
         <omgdc:Bounds x="1340" y="590" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0wc0z74_di" bpmnElement="Activity_151oyoe">
+        <omgdc:Bounds x="1100" y="590" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0ukeupi_di" bpmnElement="Gateway_13l3zm9">
         <omgdc:Bounds x="1825" y="875" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1rtmzda_di" bpmnElement="Event_1rtmzda">
+        <omgdc:Bounds x="2492" y="882" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="2472" y="925" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1ksfei8" bpmnElement="Gateway_0el7ev1">
-        <omgdc:Bounds x="2185" y="875" width="50" height="50" />
+        <omgdc:Bounds x="2225" y="875" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0s1rwo4_di" bpmnElement="Activity_03r9qeg">
-        <omgdc:Bounds x="1970" y="860" width="100" height="80" />
+        <omgdc:Bounds x="1980" y="860" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1uf07aa_di" bpmnElement="Activity_151oyoe">
-        <omgdc:Bounds x="1100" y="590" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0fjyc7m" bpmnElement="Activity_00rsnhs">
-        <omgdc:Bounds x="1970" y="980" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1cb1jc7_di" bpmnElement="Activity_1ymz5as">
+        <omgdc:Bounds x="2350" y="290" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0h21x7r_di" bpmnElement="SequenceFlow_0h21x7r">
         <omgdi:waypoint x="438" y="150" />
         <omgdi:waypoint x="470" y="150" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1y82pj2_di" bpmnElement="Flow_1y82pj2">
-        <omgdi:waypoint x="2235" y="900" />
-        <omgdi:waypoint x="2262" y="900" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0k7ibs1_di" bpmnElement="Flow_0k7ibs1">
-        <omgdi:waypoint x="1850" y="875" />
-        <omgdi:waypoint x="1850" y="765" />
-        <omgdi:waypoint x="1970" y="765" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1xplhhh_di" bpmnElement="Flow_1xplhhh">
-        <omgdi:waypoint x="2070" y="765" />
-        <omgdi:waypoint x="2210" y="765" />
-        <omgdi:waypoint x="2210" y="875" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_0hjdu92" bpmnElement="Flow_13n1ghs">
         <omgdi:waypoint x="1630" y="900" />
@@ -283,12 +293,12 @@
       <bpmndi:BPMNEdge id="Flow_1hom0xl_di" bpmnElement="Flow_1hom0xl">
         <omgdi:waypoint x="1850" y="925" />
         <omgdi:waypoint x="1850" y="1020" />
-        <omgdi:waypoint x="1970" y="1020" />
+        <omgdi:waypoint x="1980" y="1020" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_09lux4g_di" bpmnElement="Flow_09lux4g">
-        <omgdi:waypoint x="2070" y="1020" />
-        <omgdi:waypoint x="2210" y="1020" />
-        <omgdi:waypoint x="2210" y="925" />
+        <omgdi:waypoint x="2080" y="1020" />
+        <omgdi:waypoint x="2250" y="1020" />
+        <omgdi:waypoint x="2250" y="925" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0wnb4ke_di" bpmnElement="SequenceFlow_0wnb4ke">
         <omgdi:waypoint x="570" y="150" />
@@ -313,7 +323,7 @@
         <omgdi:waypoint x="940" y="630" />
         <omgdi:waypoint x="1100" y="630" />
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds x="951" y="577" width="12" height="14" />
+          <omgdc:Bounds x="951" y="577" width="11" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1505d5s_di" bpmnElement="Flow_1505d5s">
@@ -334,11 +344,22 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_05lqupa_di" bpmnElement="Flow_05lqupa">
         <omgdi:waypoint x="1875" y="900" />
-        <omgdi:waypoint x="1970" y="900" />
+        <omgdi:waypoint x="1980" y="900" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ek5nrc_di" bpmnElement="Flow_1ek5nrc">
-        <omgdi:waypoint x="2070" y="900" />
-        <omgdi:waypoint x="2185" y="900" />
+      <bpmndi:BPMNEdge id="Flow_1vj3xc7_di" bpmnElement="Flow_1vj3xc7">
+        <omgdi:waypoint x="2080" y="900" />
+        <omgdi:waypoint x="2225" y="900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1sxu8pk_di" bpmnElement="Flow_1sxu8pk">
+        <omgdi:waypoint x="2450" y="330" />
+        <omgdi:waypoint x="2471" y="330" />
+        <omgdi:waypoint x="2471" y="900" />
+        <omgdi:waypoint x="2492" y="900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14zmzi6_di" bpmnElement="Flow_14zmzi6">
+        <omgdi:waypoint x="2250" y="875" />
+        <omgdi:waypoint x="2250" y="330" />
+        <omgdi:waypoint x="2350" y="330" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
