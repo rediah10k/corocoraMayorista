@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="plazoDias" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.39.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <decision id="plazoEnDias" name="plazoEnDias" camunda:historyTimeToLive="P180D">
+    <description></description>
+    <decisionTable id="DecisionTable_1g20r1v">
+      <input id="Input_1" label="Prioridad" biodi:width="192" camunda:inputVariable="prioridadAtencion">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="plazoEnDias" typeRef="integer" biodi:width="192" />
+      <rule id="DecisionRule_0tmbg9t">
+        <inputEntry id="UnaryTests_0nsu7mi">
+          <text>"Mínima"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0htdovd">
+          <text>10</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0uv1095">
+        <inputEntry id="UnaryTests_0r3qnqq">
+          <text>"Baja"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_048oydc">
+          <text>7</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_12dfl9t">
+        <inputEntry id="UnaryTests_0vqhghf">
+          <text>"Media"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0g6zjbo">
+          <text>3</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_04r45rc">
+        <inputEntry id="UnaryTests_017saqd">
+          <text>"Alta"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1jmxio6">
+          <text>2</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1clrghx">
+        <inputEntry id="UnaryTests_1oijct3">
+          <text>"Crítica"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_10qqbcs">
+          <text>1</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="plazoEnDias">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

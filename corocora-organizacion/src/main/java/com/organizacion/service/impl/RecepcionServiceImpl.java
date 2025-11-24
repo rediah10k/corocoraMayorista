@@ -58,6 +58,9 @@ public class RecepcionServiceImpl implements RecepcionService {
                 .build();
 
         Recepcion guardado = recepcionRepository.save(recepcion);
+        Integer suma = Integer.parseInt(producto.getCantidad()) + recepcion.getCantidad();
+        producto.setCantidad(String.valueOf(suma));
+        productoRepository.save(producto);
         return guardado.getId();
     }
 

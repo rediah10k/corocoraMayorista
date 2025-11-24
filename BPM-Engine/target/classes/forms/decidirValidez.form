@@ -1,0 +1,75 @@
+{
+  "components": [
+    {
+      "text": "# Decidir Validez de Devolución",
+      "type": "text",
+      "layout": {
+        "row": "Row_1kxo5qu",
+        "columns": null
+      },
+      "id": "Field_054bza8"
+    },
+    {
+      "label": "Nombre de Cliente",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0tnpjjd",
+        "columns": null
+      },
+      "id": "Field_1cfzv91",
+      "key": "nombreCliente",
+      "readonly": true
+    },
+    {
+      "label": "Dirección Cliente",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_05sv7ey",
+        "columns": null
+      },
+      "id": "Field_17x8jf5",
+      "key": "direccionCliente",
+      "readonly": true
+    },
+    {
+      "label": "Identificación de Lote",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1dm9otm",
+        "columns": null
+      },
+      "id": "Field_1g2gpry",
+      "key": "loteId"
+    },
+    {
+      "label": "Motivo",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_0asey3g",
+        "columns": null
+      },
+      "id": "Field_1a2s4pg",
+      "key": "motivo"
+    },
+    {
+      "label": "¿Devolución Válida?",
+      "type": "radio",
+      "layout": {
+        "row": "Row_1ngczgo",
+        "columns": null
+      },
+      "id": "Field_1mykt2e",
+      "key": "devolucionValida",
+      "valuesExpression": "=[\n{\n  \"label\": \"Si\",\n  \"value\": true\n},\n{\n  \"label\": \"No\",\n  \"value\": false\n}\n  \n]"
+    }
+  ],
+  "type": "default",
+  "id": "decidirValidez",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "schemaVersion": 19
+}

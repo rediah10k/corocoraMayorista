@@ -1,33 +1,9 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+postgres_data/postmaster.pid
+postgres_data/pg_stat_tmp/
+postgres_data/pg_replslot/
+postgres_data/pg_snapshots/
+postgres_data/pg_log/
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+postgres_data/log/*.log
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/

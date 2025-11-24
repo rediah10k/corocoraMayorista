@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/.gitignore">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/.gitignore" />
+              <option name="originalContent" value="# Ignora archivos temporales de PostgreSQL&#10;postgres_data/postmaster.pid&#10;postgres_data/pg_stat_tmp/&#10;postgres_data/pg_replslot/&#10;postgres_data/pg_snapshots/&#10;postgres_data/pg_log/&#10;&#10;# Mantiene la estructura pero ignora logs&#10;postgres_data/log/*.log&#10;" />
+              <option name="updatedContent" value="# Ignora archivos temporales de PostgreSQL&#10;postgres_data/postmaster.pid&#10;postgres_data/pg_stat_tmp/&#10;postgres_data/pg_replslot/&#10;postgres_data/pg_snapshots/&#10;postgres_data/pg_log/&#10;&#10;# Mantiene la estructura pero ignora logs&#10;postgres_data/log/*.log&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/export-database.bat">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/export-database.bat" />
+              <option name="updatedContent" value="@echo off&#10;echo ============================================&#10;echo  Exportar Base de Datos PostgreSQL&#10;echo ============================================&#10;echo.&#10;&#10;set TIMESTAMP=%date:~-4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%&#10;set TIMESTAMP=%TIMESTAMP: =0%&#10;&#10;echo Creando dump de la base de datos...&#10;docker exec -t mayorista_db_container-1 pg_dumpall -U postgres &gt; dump_backup_%TIMESTAMP%.sql&#10;&#10;echo.&#10;echo ============================================&#10;echo  Dump creado: dump_backup_%TIMESTAMP%.sql&#10;echo ============================================&#10;echo.&#10;pause&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/init-db.sh">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/init-db.sh" />
+              <option name="updatedContent" value="#!/bin/bash&#10;set -e&#10;&#10;echo &quot;Esperando a que PostgreSQL esté listo...&quot;&#10;until pg_isready -U postgres; do&#10;  sleep 1&#10;done&#10;&#10;echo &quot;PostgreSQL está listo. Restaurando dump...&quot;&#10;&#10;# Restaurar el dump&#10;if [ -f /docker-entrypoint-initdb.d/dump.sql ]; then&#10;    echo &quot;Restaurando base de datos desde dump.sql...&quot;&#10;    psql -U postgres -d postgres -f /docker-entrypoint-initdb.d/dump.sql&#10;    echo &quot;¡Dump restaurado exitosamente!&quot;&#10;else&#10;    echo &quot;No se encontró el archivo dump.sql&quot;&#10;fi&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
