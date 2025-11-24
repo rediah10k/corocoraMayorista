@@ -173,7 +173,7 @@
         <bpmn:incoming>Flow_0ueivdl</bpmn:incoming>
         <bpmn:outgoing>Flow_0ujf9x0</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:serviceTask id="Activity_11hpds0" name="Guardar en sistema de gestión de almacén" camunda:delegateExpression="#{cargarProducto}">
+      <bpmn:serviceTask id="Activity_11hpds0" name="Guardar en sistema de gestión de almacén" camunda:class="com.bpm.engine.abastecimiento.delegate.InsertarInventarioDelegate">
         <bpmn:incoming>Flow_0ujf9x0</bpmn:incoming>
         <bpmn:outgoing>Flow_06nfabd</bpmn:outgoing>
       </bpmn:serviceTask>

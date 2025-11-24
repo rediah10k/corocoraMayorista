@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Component("pedidosUtil")
 public class PedidosUtil {
 
     public List<ProductoSolicitado> parsearProductosSolicitados(String productos) {
@@ -63,4 +63,43 @@ public class PedidosUtil {
                     ". Use formato yyyy-MM-dd o yyyy-MM-ddTHH:mm (ejemplo: 2025-01-20 o 2025-11-20T14:00-05:00)");
         }
     }
+
+
+    public Integer calcularTotalPedido(String productos) {
+        if (productos == null || productos.trim().isEmpty()) {
+            return 0;
+        }
+
+        int total = 0;
+        String[] lineas = productos.split(";");
+
+        for (String linea : lineas) {
+            linea = linea.trim();
+            if (linea.isEmpty()) {
+                continue;
+            }
+
+            try {
+                String[] partes = linea.split(",");
+                if (partes.length >= 5) {
+
+                    String valorStr = partes[4].trim();
+                    int valor = Integer.parseInt(valorStr);
+                    total += valor;
+                }
+            } catch (NumberFormatException e) {
+
+                System.err.println("Error parseando línea: " + linea);
+            }
+        }
+
+        return total;
+    }
+
+    public Integer calcularPrecioSinIVA(String productos) {
+        Integer total = calcularTotalPedido(productos);
+        return (int) Math.round(total * 0.81);
+    }
 }
+
+
