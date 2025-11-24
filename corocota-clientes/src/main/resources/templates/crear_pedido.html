@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Pedido</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <style>
+        /* Color del Botón Primario */
+        .btn-primary {
+            background-color: #0E3667 !important;
+            border-color: #0E3667 !important;
+        }
+
+        /* Estilos personalizados para botones del carrito */
+        .btn-custom-blue {
+            background-color: #0E3667 !important;
+            border-color: #0E3667 !important;
+            color: white !important;
+        }
+
+        .badge-custom-light {
+            background-color: #f8f9fa !important;
+            color: #0E3667 !important;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{fragments/layout_fragments :: navbar}"></div>
+
+<main class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Selección de Productos</h1>
+
+        <div id="contenedor-carrito-principal">
+
+            <button class="btn btn-lg position-relative btn-custom-blue" id="btn-carrito-vacio"
+                    data-bs-toggle="modal" data-bs-target="#carritoModal">
+                Carrito
+                <span class="badge rounded-pill ms-2 badge-custom-light" id="contador-carrito-vacio">0</span>
+            </button>
+
+            <form method="POST" th:action="@{/confirmar-compra}" id="form-continuar-compra" style="display: none;">
+                <input type="hidden" name="itemsJson" id="input-items-header">
+
+                <button type="submit" class="btn btn-lg position-relative btn-custom-blue"
+                        id="btn-continuar-compra-submit" onclick="enviarDesdeHeader(event)">
+                    Continuar Compra
+                    <span class="badge rounded-pill ms-2 badge-custom-light" id="contador-header-badge">0</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12 col-md-6 col-lg-3" th:each="producto : ${listaProductos}">
+            <div th:replace="~{fragments/producto_card :: productoCard(producto=${producto})}"></div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="carritoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Items del Pedido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group" id="lista-carrito"></ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Seguir Comprando</button>
+
+                    <form method="POST" th:action="@{/confirmar-pedido}">
+                        <input type="hidden" name="itemsPedido" id="items-pedido-input">
+                        <button type="submit" class="btn btn-primary" id="btn-confirmar" disabled onclick="prepararEnvio(event)">
+                            Confirmar Pedido (<span id="contador-modal-confirm">0</span> uds.)
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:inline="javascript">
+
+    const STORAGE_KEY = 'pedidoTemporal';
+    let carrito = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Reiniciar carrito al cargar
+        localStorage.removeItem(STORAGE_KEY);
+        carrito = {}; // Reiniciar variable local
+
+        actualizarContadorCarrito();
+        inicializarInputs();
+    });
+
+    /**
+     * Prepara y envía los datos desde el botón de cabecera "Continuar Compra"
+     */
+    function enviarDesdeHeader(event) {
+        // Construir el array de objetos para enviar
+        const itemsParaEnvio = Object.values(carrito).map(item => ({
+            id: item.id,
+            nombre: item.nombre,
+            precio: item.precio, // Asegúrate de guardar precio en agregarProducto
+            cantidad: item.cantidad
+        }));
+
+        const jsonString = JSON.stringify(itemsParaEnvio);
+        document.getElementById('input-items-header').value = jsonString;
+        // El submit continúa normalmente
+    }
+
+    function inicializarInputs() {
+        const inputs = document.querySelectorAll('[id^="qty-"]');
+        inputs.forEach(input => {
+            const id = input.id.replace('qty-', '');
+            // Como reiniciamos el carrito al cargar, todo empieza en 0
+            input.value = 0;
+            toggleControles(id, false);
+
+            const notifContainer = document.getElementById(input.id).closest('.card-body').querySelector(`#notif-container-${id}`);
+            if (notifContainer) notifContainer.innerHTML = '';
+        });
+    }
+
+    function toggleControles(id, bloquear) {
+        const btnAdd = document.getElementById('btn-add-' + id);
+        const btnMinus = document.getElementById('btn-minus-' + id);
+        const btnPlus = document.getElementById('btn-plus-' + id);
+        const qtyGroup = document.getElementById('qty-group-' + id);
+
+        if (!btnAdd || !btnMinus || !btnPlus || !qtyGroup) return;
+
+        btnAdd.disabled = bloquear;
+        btnMinus.disabled = bloquear;
+        btnPlus.disabled = bloquear;
+
+        const opacityValue = bloquear ? '0.5' : '1';
+        btnAdd.style.opacity = opacityValue;
+        qtyGroup.style.opacity = opacityValue;
+    }
+
+    function cambiarCantidad(id, delta) {
+        const input = document.getElementById('qty-' + id);
+        let cantidadActual = parseInt(input.value);
+        if (isNaN(cantidadActual)) cantidadActual = 0;
+        let nuevaCantidad = cantidadActual + delta;
+        if (nuevaCantidad < 0) nuevaCantidad = 0;
+        input.value = nuevaCantidad;
+    }
+
+    // Nota: Necesitamos capturar el precio para enviarlo luego en el resumen
+    function agregarProducto(id, nombre) {
+        const inputCantidad = document.getElementById('qty-' + id);
+        const cantidad = parseInt(inputCantidad.value);
+
+        if (isNaN(cantidad) || cantidad < 1) {
+            alert('La cantidad debe ser al menos 1 para añadir.');
+            return;
+        }
+
+        // Intenta obtener el precio del DOM si es posible, o asegúrate de pasarlo
+        // Aquí asumimos un valor por defecto o que se mejora la función para recibir precio.
+        // Para que funcione el resumen, idealmente pasa el precio en onclick del HTML.
+
+        carrito[id] = {
+            id: id.toString(),
+            nombre: nombre,
+            cantidad: cantidad,
+            precio: 0 // TODO: Pasar precio desde HTML si se requiere en JS
+        };
+
+        toggleControles(id, true);
+        mostrarNotificacion(id, cantidad);
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(carrito));
+        actualizarContadorCarrito();
+    }
+
+    function mostrarNotificacion(id, cantidad) {
+        const contenedorNotif = document.getElementById('qty-' + id).closest('.card-body').querySelector(`#notif-container-${id}`);
+        contenedorNotif.innerHTML = '';
+
+        const notificacion = document.createElement('div');
+        notificacion.id = `notif-${id}`;
+        notificacion.className = `mt-2 mb-0`;
+
+        const mensajePrincipal = document.createElement('div');
+        mensajePrincipal.className = `d-flex justify-content-between align-items-center`;
+        mensajePrincipal.style.fontSize = '0.9rem';
+        mensajePrincipal.innerHTML = `<span class="fw-bold">${cantidad} ${cantidad === 1 ? 'unidad' : 'unidades'} seleccionadas</span>`;
+
+        const linkDeshacer = document.createElement('small');
+        linkDeshacer.className = `d-block mt-1`;
+        linkDeshacer.style.fontSize = '0.75rem';
+        linkDeshacer.innerHTML = `
+            <a href="#" style="color: #0E3667; text-decoration: none;"
+               onmouseover="this.style.textDecoration='underline';"
+               onmouseout="this.style.textDecoration='none';"
+               onclick="event.preventDefault(); deshacerAccion('${id}');">Deshacer</a>`;
+
+        notificacion.appendChild(mensajePrincipal);
+        notificacion.appendChild(linkDeshacer);
+        contenedorNotif.appendChild(notificacion);
+    }
+
+    function deshacerAccion(id) {
+        const inputCantidad = document.getElementById('qty-' + id);
+        delete carrito[id];
+        inputCantidad.value = 0;
+        document.getElementById('qty-' + id).closest('.card-body').querySelector(`#notif-container-${id}`).innerHTML = '';
+        toggleControles(id, false);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(carrito));
+        actualizarContadorCarrito();
+    }
+
+    function actualizarContadorCarrito() {
+        let cantidadTotal = 0;
+        Object.values(carrito).forEach(item => {
+            cantidadTotal += item.cantidad;
+        });
+
+        // 1. Modal
+        const btnConfirmar = document.getElementById('btn-confirmar');
+        if(btnConfirmar) btnConfirmar.disabled = (cantidadTotal === 0);
+        const countModal = document.getElementById('contador-modal-confirm');
+        if(countModal) countModal.innerText = cantidadTotal;
+
+        // 2. Cabecera (Toggle entre Botón Vacío y Formulario Continuar)
+        const btnVacio = document.getElementById('btn-carrito-vacio');
+        const formContinuar = document.getElementById('form-continuar-compra');
+        const badgeHeader = document.getElementById('contador-header-badge');
+        const badgeVacio = document.getElementById('contador-carrito-vacio');
+
+        if (cantidadTotal > 0) {
+            formContinuar.style.display = 'inline-block';
+            btnVacio.style.display = 'none';
+            badgeHeader.innerText = cantidadTotal;
+        } else {
+            btnVacio.style.display = 'inline-block';
+            formContinuar.style.display = 'none';
+            badgeVacio.innerText = cantidadTotal;
+        }
+
+        // 3. Lista Modal
+        const listaCarrito = document.getElementById('lista-carrito');
+        listaCarrito.innerHTML = '';
+        if (cantidadTotal === 0) {
+            listaCarrito.innerHTML = '<li class="list-group-item text-center text-muted">El carrito está vacío.</li>';
+        } else {
+            Object.values(carrito).forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                li.innerHTML = `${item.nombre}<span class="badge bg-info text-dark rounded-pill">${item.cantidad} uds.</span>`;
+                listaCarrito.appendChild(li);
+            });
+        }
+    }
+
+    function prepararEnvio(event) {
+        const itemsParaEnvio = Object.values(carrito).map(item => ({
+            id: item.id,
+            cantidad: item.cantidad
+        }));
+        const jsonString = JSON.stringify(itemsParaEnvio);
+        document.getElementById('items-pedido-input').value = jsonString;
+    }
+</script>
+</body>
+</html>

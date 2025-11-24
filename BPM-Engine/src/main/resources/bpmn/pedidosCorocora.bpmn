@@ -101,6 +101,7 @@
     <callActivity id="Activity_1kyig4b" name="Programar envío" calledElement="programacionProcess">
       <extensionElements>
         <camunda:in sourceExpression="${pedidoId}" target="pedidoIdSub" />
+        <camunda:in sourceExpression="${comentarios}" target="comentariosSub" />
       </extensionElements>
       <incoming>Flow_1n9fkqq</incoming>
       <outgoing>Flow_07ydp5p</outgoing>
@@ -145,13 +146,13 @@
       <incoming>Flow_05lqupa</incoming>
       <outgoing>Flow_1ek5nrc</outgoing>
     </serviceTask>
-    <serviceTask id="Activity_00rsnhs" name="Confirmar pedido" camunda:expression="${true}">
-      <incoming>Flow_1hom0xl</incoming>
-      <outgoing>Flow_09lux4g</outgoing>
-    </serviceTask>
     <serviceTask id="Activity_151oyoe" name="Notificar confirmación del pedido" camunda:expression="${true}">
       <incoming>Flow_08zqiwc</incoming>
       <outgoing>Flow_1n9fkqq</outgoing>
+    </serviceTask>
+    <serviceTask id="Activity_00rsnhs" name="Confirmar pedido" camunda:expression="${true}">
+      <incoming>Flow_1hom0xl</incoming>
+      <outgoing>Flow_09lux4g</outgoing>
     </serviceTask>
   </process>
   <bpmndi:BPMNDiagram id="BpmnDiagram_1">
@@ -240,12 +241,12 @@
       <bpmndi:BPMNShape id="Activity_0s1rwo4_di" bpmnElement="Activity_03r9qeg">
         <omgdc:Bounds x="1970" y="860" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0fjyc7m" bpmnElement="Activity_00rsnhs">
-        <omgdc:Bounds x="1980" y="980" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1uf07aa_di" bpmnElement="Activity_151oyoe">
         <omgdc:Bounds x="1100" y="590" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0fjyc7m" bpmnElement="Activity_00rsnhs">
+        <omgdc:Bounds x="1970" y="980" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0h21x7r_di" bpmnElement="SequenceFlow_0h21x7r">
         <omgdi:waypoint x="438" y="150" />
@@ -282,10 +283,10 @@
       <bpmndi:BPMNEdge id="Flow_1hom0xl_di" bpmnElement="Flow_1hom0xl">
         <omgdi:waypoint x="1850" y="925" />
         <omgdi:waypoint x="1850" y="1020" />
-        <omgdi:waypoint x="1980" y="1020" />
+        <omgdi:waypoint x="1970" y="1020" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_09lux4g_di" bpmnElement="Flow_09lux4g">
-        <omgdi:waypoint x="2080" y="1020" />
+        <omgdi:waypoint x="2070" y="1020" />
         <omgdi:waypoint x="2210" y="1020" />
         <omgdi:waypoint x="2210" y="925" />
       </bpmndi:BPMNEdge>

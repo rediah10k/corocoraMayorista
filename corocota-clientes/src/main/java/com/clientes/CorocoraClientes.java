@@ -1,11 +1,14 @@
-package com.organizacion;
+package com.clientes;
+
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 @SpringBootApplication
-public class CorocoraOrganizacion {
+public class CorocoraClientes {
     public static void main(String[] args) {
-        SpringApplication.run(CorocoraOrganizacion.class, args);
+        SpringApplication.run(CorocoraClientes.class, args);
     }
+
 }

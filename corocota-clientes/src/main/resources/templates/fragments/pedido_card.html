@@ -1,0 +1,124 @@
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+
+<div th:fragment="pedidoCard(pedido)">
+
+    <style>
+        /* 3. Color del Botón Primario de Bootstrap (Detalles de Orden y Crear Pedido) */
+        .btn-primary {
+            background-color: #0E3667 !important;
+            border-color: #0E3667 !important;
+        }
+
+        /* 4. Estilos de la Barra de Progreso */
+        .progress-indicator {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .progress-indicator::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #e0e0e0;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+        .progress-indicator-small {
+            padding-top: 5px;
+        }
+        .progress-indicator-small .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            font-size: 0.75em;
+            color: #888;
+            white-space: nowrap;
+        }
+        .progress-indicator-small .progress-step-circle {
+            width: 14px;
+            height: 14px;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            margin: 0 auto 5px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.6em;
+        }
+
+        /* 5. Círculos Activos de la Barra de Progreso (Color #0E3667) */
+        .progress-step.active .progress-step-circle {
+            background-color: #0E3667;
+        }
+        .progress-step.active {
+            color: #333;
+            font-weight: bold;
+        }
+        .progress-step.active .progress-step-circle::before {
+            content: '✓';
+            color: white;
+        }
+    </style>
+    <div class="card mb-3 shadow-sm">
+        <div class="card-body">
+
+            <div class="row align-items-center mb-3">
+                <div class="col-md-8 col-lg-8 col-12">
+                    <h5 class="card-title mb-1">ID PEDIDO #<span th:text="${pedido.id}">123</span></h5>
+                    <p class="card-text mb-0">
+                        <span th:text="${pedido.moneda}">USD</span>
+                        <span th:text="${#numbers.formatDecimal(pedido.total, 1, 'POINT', 2, 'COMMA')}">350,50</span>
+                    </p>
+                </div>
+                <div class="col-md-4 col-lg-4 col-12 text-md-end mt-2 mt-md-0">
+                    <button type="button" class="btn btn-primary btn-sm me-2">Detalles de Pedido</button>
+                    <button type="button" class="btn btn-outline-danger btn-sm">Cancelar Pedido</button>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+
+                <div class="col-md-8 col-lg-8 col-12 mb-3">
+                    <div class="progress-indicator progress-indicator-small mt-0">
+                        <div th:classappend="${pedido.estado == 'CONFIRMADO' || pedido.estado == 'PREPARANDO' || pedido.estado == 'ENVIADO' || pedido.estado == 'ENTREGADO' ? 'active' : ''}" class="progress-step">
+                            <div class="progress-step-circle"></div>
+                            Confirmado
+                        </div>
+                        <div th:classappend="${pedido.estado == 'PREPARANDO' || pedido.estado == 'ENVIADO' || pedido.estado == 'ENTREGADO' ? 'active' : ''}" class="progress-step">
+                            <div class="progress-step-circle"></div>
+                            Preparando
+                        </div>
+                        <div th:classappend="${pedido.estado == 'ENVIADO' || pedido.estado == 'ENTREGADO' ? 'active' : ''}" class="progress-step">
+                            <div class="progress-step-circle"></div>
+                            Envíado
+                        </div>
+                        <div th:classappend="${pedido.estado == 'ENTREGADO' ? 'active' : ''}" class="progress-step">
+                            <div class="progress-step-circle"></div>
+                            Entregado
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-4 col-12 text-md-end mb-3">
+                    <p class="card-text mb-0">
+                        <small class="text-muted">
+                            Fecha de Pedido: <span th:text="${pedido.fecha}">2025-11-20</span>
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

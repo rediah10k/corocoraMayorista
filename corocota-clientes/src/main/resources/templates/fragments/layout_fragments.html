@@ -1,0 +1,50 @@
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+
+<div th:fragment="navbar">
+
+    <style>
+        /* ESTILOS ESPECÍFICOS PARA ESTE COMPONENTE */
+        .bg-custom-blue-dark {
+            background-color: #0E3667 !important;
+        }
+
+        /* OPCIONAL: Si quieres ajustar el texto de los enlaces al pasar el ratón */
+        .navbar-nav .nav-link {
+            transition: color 0.2s;
+            /* El color del texto es blanco, por la clase navbar-dark */
+        }
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link:focus {
+            color: #ccc !important; /* Un gris claro al pasar el ratón */
+        }
+    </style>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-custom-blue-dark sticky-top shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand fs-4 fw-bold" th:href="@{/}">Corocora Mayorista Clientes</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/pedidos}">Pedidos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/facturas}">Facturas</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

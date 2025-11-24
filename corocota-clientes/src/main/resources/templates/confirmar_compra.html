@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen del Pedido</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <style>
+        /* Estilos consistentes con tu diseño */
+        .bg-custom-blue {
+            background-color: #0E3667 !important;
+            color: white !important;
+        }
+
+        .btn-primary {
+            background-color: #0E3667 !important;
+            border-color: #0E3667 !important;
+        }
+
+        .btn-primary:hover {
+            background-color: #0b2a52 !important;
+            border-color: #0b2a52 !important;
+        }
+
+        .btn-outline-custom {
+            color: #0E3667;
+            border-color: #0E3667;
+        }
+
+        .btn-outline-custom:hover {
+            background-color: #0E3667;
+            color: white;
+        }
+
+        .text-custom-blue {
+            color: #0E3667 !important;
+        }
+
+        /* Estilo para la tabla */
+        .table-header-custom {
+            background-color: #f8f9fa;
+            color: #0E3667;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{fragments/layout_fragments :: navbar}"></div>
+
+<main class="container my-5">
+
+    <div class="mb-4 text-center">
+        <h1 class="display-5 fw-bold text-custom-blue">Resumen de tu Pedido</h1>
+        <p class="text-muted">Por favor, verifica los detalles antes de finalizar la compra.</p>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-5">
+        <div class="card-header bg-custom-blue py-3">
+            <h5 class="mb-0 text-white"><i class="fas fa-shopping-cart me-2"></i>Detalles de los Productos</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-header-custom">
+                    <tr>
+                        <th scope="col" class="ps-4">Producto</th>
+                        <th scope="col" class="text-center">Cantidad</th>
+                        <th scope="col" class="text-end">Precio Unit.</th>
+                        <th scope="col" class="text-end pe-4">Subtotal</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${items}">
+                        <td class="ps-4">
+                            <div class="d-flex align-items-center">
+                                <div th:if="${item['imagenUrl']}" class="me-3">
+                                    <img th:src="@{${item['imagenUrl']}}" alt="Img"
+                                         style="width: 50px; height: 50px; object-fit: cover;" class="rounded">
+                                </div>
+                                <span class="fw-bold" th:text="${item['nombre']}">Nombre Producto</span>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge bg-light text-dark border fs-6" th:text="${item['cantidad']}">1</span>
+                        </td>
+                        <td class="text-end" th:text="${#numbers.formatDecimal(item['precio'], 1, 'POINT', 2, 'COMMA')}">
+                            100.00
+                        </td>
+                        <td class="text-end pe-4 fw-bold text-custom-blue"
+                            th:text="${#numbers.formatDecimal(item['subtotal'], 1, 'POINT', 2, 'COMMA')}">
+                            200.00
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot class="bg-light">
+                    <tr>
+                        <td colspan="3" class="text-end fw-bold py-3 fs-5">TOTAL A PAGAR:</td>
+                        <td class="text-end pe-4 py-3 fw-bold fs-4 text-success"
+                            th:text="${#numbers.formatDecimal(totalPedido, 1, 'POINT', 2, 'COMMA')}">
+                            1,500.00
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center">
+
+        <a th:href="@{/crear-pedido}" class="btn btn-outline-custom btn-lg">
+            &larr; Volver y Editar
+        </a>
+
+        <form method="POST" th:action="@{/finalizar-pedido}">
+            <button type="submit" class="btn btn-primary btn-lg px-5 shadow">
+                Confirmar y Pagar &rarr;
+            </button>
+        </form>
+    </div>
+
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>
