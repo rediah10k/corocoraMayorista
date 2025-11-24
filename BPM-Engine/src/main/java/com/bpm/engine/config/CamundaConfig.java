@@ -6,7 +6,12 @@ import org.camunda.bpm.engine.identity.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Base64;
+import java.util.Collections;
 
 @Configuration
 public class CamundaConfig {
@@ -44,8 +49,24 @@ public class CamundaConfig {
 
     @Bean
     public RestTemplate restTemplate() {
-        return new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Interceptor que añade el encabezado de Basic Auth antes de la ejecución
+        ClientHttpRequestInterceptor interceptor = (request, body, execution) -> {
+            String auth = "camunda@gmail.com" + ":" + "camunda";
+            String authHeader = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
+            // Añade el encabezado de autorización
+            request.getHeaders().add(HttpHeaders.AUTHORIZATION, authHeader);
+
+            return execution.execute(request, body);
+        };
+
+        restTemplate.setInterceptors(Collections.singletonList(interceptor));
+
+        return restTemplate;
     }
+
+
 
 
 
