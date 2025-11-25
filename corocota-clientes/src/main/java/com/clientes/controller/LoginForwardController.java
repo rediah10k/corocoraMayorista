@@ -75,7 +75,7 @@ public class LoginForwardController {
 
         // 1. Verificar autenticación
         if (!sessionData.isAuthenticated() || sessionData.getClienteInfo() == null) {
-            return "redirect:/login";
+           return "redirect:/login";
         }
 
         // 2. 🔑 CLAVE: Añadir el objeto ClienteResponse del bean de sesión al Model
