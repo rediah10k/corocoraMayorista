@@ -1,5 +1,6 @@
 package com.clientes.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -13,7 +14,7 @@ import java.util.Collections;
 public class RestClientConfig {
 
     // 🔑 Bean de RestTemplate con el interceptor de Basic Auth
-    @Bean
+    @Bean("authRestTemplate")
     public RestTemplate authenticatedRestTemplate(UserSessionData sessionData) {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -31,5 +32,15 @@ public class RestClientConfig {
         restTemplate.setInterceptors(Collections.singletonList(interceptor));
 
         return restTemplate;
+    }
+
+    @Bean("plainRestTemplate") // <- Renombrado a "plainRestTemplate"
+    public RestTemplate unauthenticatedRestTemplate() {
+        return new RestTemplate();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 }

@@ -110,7 +110,7 @@
         const itemsParaEnvio = Object.values(carrito).map(item => ({
             id: item.id,
             nombre: item.nombre,
-            precio: item.precio, // Asegúrate de guardar precio en agregarProducto
+            precio: item.precio,
             cantidad: item.cantidad
         }));
 
@@ -158,8 +158,12 @@
         input.value = nuevaCantidad;
     }
 
-    // Nota: Necesitamos capturar el precio para enviarlo luego en el resumen
-    function agregarProducto(id, nombre) {
+    /** 🚀 NUEVA FUNCIÓN: Lee id, nombre y precio de los atributos data-* del botón. */
+    function agregarProductoDesdeData(boton) {
+        const id = boton.getAttribute('data-id');
+        const nombre = boton.getAttribute('data-nombre');
+        const precio = parseFloat(boton.getAttribute('data-precio')); // Lee el precio
+
         const inputCantidad = document.getElementById('qty-' + id);
         const cantidad = parseInt(inputCantidad.value);
 
@@ -168,15 +172,11 @@
             return;
         }
 
-        // Intenta obtener el precio del DOM si es posible, o asegúrate de pasarlo
-        // Aquí asumimos un valor por defecto o que se mejora la función para recibir precio.
-        // Para que funcione el resumen, idealmente pasa el precio en onclick del HTML.
-
         carrito[id] = {
             id: id.toString(),
             nombre: nombre,
             cantidad: cantidad,
-            precio: 0 // TODO: Pasar precio desde HTML si se requiere en JS
+            precio: precio
         };
 
         toggleControles(id, true);
@@ -185,6 +185,8 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(carrito));
         actualizarContadorCarrito();
     }
+
+    // NOTA: La antigua función 'agregarProducto' (que fijaba precio a 0) fue eliminada.
 
     function mostrarNotificacion(id, cantidad) {
         const contenedorNotif = document.getElementById('qty-' + id).closest('.card-body').querySelector(`#notif-container-${id}`);
@@ -275,5 +277,6 @@
         document.getElementById('items-pedido-input').value = jsonString;
     }
 </script>
+
 </body>
 </html>
