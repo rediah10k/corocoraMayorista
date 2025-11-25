@@ -1,15 +1,15 @@
 package com.organizacion.controller;
 
 import com.organizacion.dto.*;
+import com.organizacion.enitity.Cliente;
 import com.organizacion.service.PedidosService;
-import com.organizacion.service.RecepcionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 
 @RestController
@@ -18,6 +18,14 @@ import java.util.logging.Logger;
 public class PedidosController {
 
         private PedidosService pedidosService;
+
+
+        @PostMapping("/proceso/iniciar")
+        ResponseEntity<Void> iniciarPedido(@AuthenticationPrincipal Cliente cliente,@RequestBody String productosStr){
+            String productosLimpios = productosStr.replace("\r", "");
+
+            return ResponseEntity.ok().build();
+        }
 
         @PostMapping("validar")
         ResponseEntity<Map<String, Object>> validarStockProductos(@RequestBody List<ProductoSolicitado> productoSolicitadoList){

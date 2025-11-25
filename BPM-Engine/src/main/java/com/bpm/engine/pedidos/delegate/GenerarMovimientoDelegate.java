@@ -29,13 +29,12 @@ public class GenerarMovimientoDelegate implements JavaDelegate {
 
 
         try {
-            String numeroDocumentoString = (String) execution.getVariable("numeroDocumento");
+            Long numeroDocumento = (Long) execution.getVariable("documento");
             List<ProductoSolicitado> productoSolicitados = (List<ProductoSolicitado>) execution.getVariable("productosSolicitados");
             Boolean stock = (Boolean) execution.getVariable("stock");
-            Long numeroDocumento = Long.parseLong(numeroDocumentoString);
 
-            ClienteResponse clienteResponse = httpUtil.enviarPeticion(
-                    "http://localhost:8091/api/clientes/" + numeroDocumento,
+                ClienteResponse clienteResponse = httpUtil.enviarPeticion(
+                        "http://localhost:8091/api/clientes/" + numeroDocumento,
                     HttpMethod.GET,
                     null,
                     ClienteResponse.class

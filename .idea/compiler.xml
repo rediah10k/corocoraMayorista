@@ -2,24 +2,22 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="BPM-Engine" />
         <module name="corocora-organizacion" />
         <module name="corocora-proveedores" />
-        <module name="camunda-inventario" />
         <module name="corocota-clientes" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="BPM-Engine" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="BPM-Engine" options="-parameters" />
-      <module name="camunda-inventario" options="-parameters" />
+      <module name="camunda-inventario" options="" />
       <module name="camunda-recepcion" options="" />
       <module name="corocora-organizacion" options="-parameters" />
       <module name="corocora-proveedores" options="-parameters" />

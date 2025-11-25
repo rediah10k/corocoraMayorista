@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido Confirmado</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Estilos consistentes con tu diseño */
+        .bg-custom-blue {
+            background-color: #0E3667 !important;
+            color: white !important;
+        }
+        .text-custom-blue {
+            color: #0E3667 !important;
+        }
+        .btn-success-custom {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: white;
+        }
+        .btn-success-custom:hover {
+            background-color: #1e7e34;
+            border-color: #1c7430;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{fragments/layout_fragments :: navbar}"></div>
+
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 text-center p-5">
+
+                <i class="fas fa-check-circle fa-6x text-success mb-4"></i>
+                <h1 class="display-4 fw-bold text-success mb-3">
+                    ¡Pedido Confirmado!
+                </h1>
+
+                <p class="lead text-muted mb-4">
+                    Tu solicitud ha sido procesada exitosamente.
+                </p>
+
+                <h2 class="h5 fw-normal mb-5">
+                    Número de Pedido:
+                    <span class="text-custom-blue fw-bold" th:text="${idPedido}">#000000</span>
+                </h2>
+
+                <div class="d-grid gap-3">
+
+                    <a th:href="@{/}" class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-home me-2"></i> Volver al Inicio
+                    </a>
+
+                    <a th:href="@{/pedidos/{id}(id=${idPedido})}" class="btn btn-success-custom btn-lg">
+                        <i class="fas fa-file-invoice me-2"></i> Ver Detalles del Pedido
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

@@ -15,5 +15,8 @@ public class ProductoSolicitado {
     private  String lineaOriginal;
     private  boolean valido;
     private  String mensajeError;
+
+
+
 }
 

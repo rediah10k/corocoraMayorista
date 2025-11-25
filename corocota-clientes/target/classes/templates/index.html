@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+</head>
+<body>
+
+<div th:replace="~{fragments/layout_fragments :: navbar}"></div>
+
+
+<main class="container my-4">
+
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <h1 class="display-5 fw-bold" th:text="'Bienvenido/a, ' + ${clienteInfo.nombres}">Bienvenido/a</h1>
+        <p class="fs-4">
+            Tu panel de control y estado de cuenta.
+        </p>
+        <p th:if="${esAdmin}" class="text-danger">
+            Modo Administrador Activo.
+        </p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card info-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">SALDO DISPONIBLE</h5>
+                    <p class="card-text display-4 fw-bold text-success"
+                       th:text="${#numbers.formatCurrency(clienteInfo.saldo)}">
+                        $0.00
+                    </p>
+                    <p class="text-muted">Última actualización: <span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy HH:mm')}"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card info-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">DETALLES DE LA CUENTA</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Nombre Completo:</strong>
+                            <span th:text="${clienteInfo.nombres}"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Documento:</strong>
+                            <span th:text="${clienteInfo.documento}"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>ID Cliente:</strong>
+                            <span th:text="${clienteInfo.id}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
