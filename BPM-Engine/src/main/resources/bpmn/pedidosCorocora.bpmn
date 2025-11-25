@@ -152,10 +152,12 @@
     <userTask id="Activity_1ymz5as" name="Consultar factura">
       <extensionElements>
         <camunda:formData>
-          <camunda:formField id="mensajeUrl" label="URL Factura Generada" type="string" defaultValue="${pdfUrl}" />
-          <camunda:formField id="mensajeAhorro" label="Informacion" type="string" defaultValue="${String.format(&#39;Total: $%,d - Sin IVA: $%,d - Si fueses asociado ahorrarías: $%,d&#39;, precioTotal, precioSinIVA, promoPosible)}">
+          <camunda:formField id="mensajeUrl" label="Aqui puedes ver tu factura de pago" type="string" defaultValue="${pdfUrl}" />
+          <camunda:formField id="mensajeCS" label="Costo subtotal" type="string" defaultValue="${precioTotal}">
             <camunda:validation />
           </camunda:formField>
+          <camunda:formField id="mensajeCCI" label="Costo con IVA" type="string" defaultValue="${precioSinIVA}" />
+          <camunda:formField id="mensajeAh" label="Ahorro potencial con asociacion pro" type="string" defaultValue="${promoPosible}" />
         </camunda:formData>
       </extensionElements>
       <incoming>Flow_14zmzi6</incoming>
