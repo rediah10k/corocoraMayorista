@@ -32,10 +32,10 @@ public class PedidoController {
     public String goHome(Model model) { // 🔑 CLAVE: Inyectar Model
 
         // 1. Verificar autenticación
-        if (!sessionData.isAuthenticated() || sessionData.getClienteInfo() == null) {
+        if (!sessionData.isAuthenticatedAdmin() || sessionData.getPasswordAdmin() == null) {
             return "redirect:/login";
         }
-        model.addAttribute("clienteInfo", sessionData.getClienteInfo());
+        model.addAttribute("clienteInfo", sessionData.getClienteInfoAdmin());
 
         List<TareaActivaInfo> tareasInfo = camundaService.obtenerIdsActivosEnActivityId(prioridadActivityId);
 

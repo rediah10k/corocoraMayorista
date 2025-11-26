@@ -6,12 +6,10 @@
   <bpmn:process id="programacionProcess" isExecutable="true" camunda:jobPriority="1" camunda:historyTimeToLive="180">
     <bpmn:laneSet id="LaneSet_0kq24cv">
       <bpmn:lane id="Lane_0rwzhbp" name="Área logística">
-        <bpmn:flowNodeRef>Activity_1ib4p4m</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1losy39</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_15rqk3d</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0kcorgl</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1rk7li9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1lr65g8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0ku0lhw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1l7n9z0</bpmn:flowNodeRef>
@@ -21,6 +19,8 @@
         <bpmn:flowNodeRef>Activity_1ut4hv3</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0sdzqn5</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_01hwl29</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1ib4p4m</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1rk7li9</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:sequenceFlow id="Flow_1gyrup0" name="¿Fecha y Hora válidas?" sourceRef="Activity_1lr65g8" targetRef="Activity_10mniy50" />
@@ -110,11 +110,6 @@ outputFormat.format(calendar.getTime())</camunda:script>
       <bpmn:incoming>Flow_0uks790</bpmn:incoming>
       <bpmn:outgoing>Flow_1gyrup0</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Activity_1rk7li9" name="Seleccionar prioridad" camunda:formRef="prioridadEnvio" camunda:formRefBinding="latest">
-      <bpmn:extensionElements />
-      <bpmn:incoming>Flow_0rr424h</bpmn:incoming>
-      <bpmn:outgoing>Flow_01a6q2o</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:startEvent id="StartEvent_1" name="Programación de envío iniciado">
       <bpmn:outgoing>Flow_0rr424h</bpmn:outgoing>
     </bpmn:startEvent>
@@ -131,30 +126,6 @@ outputFormat.format(calendar.getTime())</camunda:script>
       <bpmn:incoming>Flow_1laamh4</bpmn:incoming>
       <bpmn:outgoing>Flow_0uks790</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:businessRuleTask id="Activity_1ib4p4m" name="Determinar plazo máximo" camunda:resultVariable="plazoEnDias" camunda:decisionRef="plazoEnDias" camunda:mapDecisionResult="singleEntry">
-      <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:outputParameter name="plazoMaximo">
-            <camunda:script scriptFormat="groovy">import java.util.Calendar
-import java.util.Date
-
-def calendar = Calendar.getInstance()
-def dias = execution.getVariable("plazoEnDias") as int
-
-calendar.set(Calendar.HOUR_OF_DAY, 23)
-calendar.set(Calendar.MINUTE, 59)
-calendar.set(Calendar.SECOND, 0)
-calendar.set(Calendar.MILLISECOND, 0)
-
-calendar.add(Calendar.DAY_OF_YEAR, dias)
-
-return calendar.getTime()</camunda:script>
-          </camunda:outputParameter>
-        </camunda:inputOutput>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_01a6q2o</bpmn:incoming>
-      <bpmn:outgoing>Flow_0uwrnts</bpmn:outgoing>
-    </bpmn:businessRuleTask>
     <bpmn:endEvent id="Event_0ku0lhw" name="Envio programado">
       <bpmn:incoming>Flow_0kself5</bpmn:incoming>
     </bpmn:endEvent>
@@ -215,6 +186,35 @@ return !fechaDate.after(plazo)</bpmn:script>
       <bpmn:outgoing>Flow_0kself5</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0rr424h" sourceRef="StartEvent_1" targetRef="Activity_1rk7li9" />
+    <bpmn:businessRuleTask id="Activity_1ib4p4m" name="Determinar plazo máximo" camunda:resultVariable="plazoEnDias" camunda:decisionRef="plazoEnDias" camunda:mapDecisionResult="singleEntry">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="plazoMaximo">
+            <camunda:script scriptFormat="groovy">import java.util.Calendar
+import java.util.Date
+
+def calendar = Calendar.getInstance()
+def dias = execution.getVariable("plazoEnDias") as int
+
+calendar.set(Calendar.HOUR_OF_DAY, 23)
+calendar.set(Calendar.MINUTE, 59)
+calendar.set(Calendar.SECOND, 0)
+calendar.set(Calendar.MILLISECOND, 0)
+
+calendar.add(Calendar.DAY_OF_YEAR, dias)
+
+return calendar.getTime()</camunda:script>
+          </camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_01a6q2o</bpmn:incoming>
+      <bpmn:outgoing>Flow_0uwrnts</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:userTask id="Activity_1rk7li9" name="Seleccionar prioridad" camunda:formRef="prioridadEnvio" camunda:formRefBinding="latest">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_0rr424h</bpmn:incoming>
+      <bpmn:outgoing>Flow_01a6q2o</bpmn:outgoing>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1sgqzqw">
@@ -228,10 +228,6 @@ return !fechaDate.after(plazo)</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_13v8omr_di" bpmnElement="Activity_1lr65g8">
         <dc:Bounds x="810" y="140" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1yv2ac9_di" bpmnElement="Activity_1rk7li9">
-        <dc:Bounds x="430" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
@@ -250,9 +246,6 @@ return !fechaDate.after(plazo)</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1losy39_di" bpmnElement="Gateway_1losy39" isMarkerVisible="true">
         <dc:Bounds x="745" y="155" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0acw2o7_di" bpmnElement="Activity_1ib4p4m">
-        <dc:Bounds x="600" y="140" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0ku0lhw_di" bpmnElement="Event_0ku0lhw">
         <dc:Bounds x="1832" y="102" width="36" height="36" />
@@ -282,6 +275,13 @@ return !fechaDate.after(plazo)</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1onnh0i" bpmnElement="Activity_01hwl29" color:background-color="" color:border-color="">
         <dc:Bounds x="1630" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0acw2o7_di" bpmnElement="Activity_1ib4p4m">
+        <dc:Bounds x="540" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1yv2ac9_di" bpmnElement="Activity_1rk7li9">
+        <dc:Bounds x="370" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0wq8b6i_di" bpmnElement="Event_0sdzqn5">
@@ -341,12 +341,12 @@ return !fechaDate.after(plazo)</bpmn:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0uwrnts_di" bpmnElement="Flow_0uwrnts">
-        <di:waypoint x="700" y="180" />
+        <di:waypoint x="640" y="180" />
         <di:waypoint x="745" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_01a6q2o_di" bpmnElement="Flow_01a6q2o">
-        <di:waypoint x="530" y="180" />
-        <di:waypoint x="600" y="180" />
+        <di:waypoint x="470" y="180" />
+        <di:waypoint x="540" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1oyqtbg_di" bpmnElement="Flow_1oyqtbg">
         <di:waypoint x="1060" y="180" />
@@ -354,7 +354,7 @@ return !fechaDate.after(plazo)</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0rr424h_di" bpmnElement="Flow_0rr424h">
         <di:waypoint x="278" y="180" />
-        <di:waypoint x="430" y="180" />
+        <di:waypoint x="370" y="180" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

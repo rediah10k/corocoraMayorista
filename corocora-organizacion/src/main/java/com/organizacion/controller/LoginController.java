@@ -56,12 +56,12 @@ public class LoginController {
             if (clienteInfo != null && clienteInfo.getId() != null) {
 
                 // 3. Almacenar credenciales y autenticación en la sesión
-                sessionData.setUsername(username);
-                sessionData.setPassword(password);
-                sessionData.setAuthenticated(true);
+                sessionData.setUsernameAdmin(username);
+                sessionData.setPasswordAdmin(password);
+                sessionData.setAuthenticatedAdmin(true);
 
                 // 🔑 CLAVE: Almacenar los datos del cliente en el bean de sesión
-                sessionData.setClienteInfo(clienteInfo);
+                sessionData.setClienteInfoAdmin(clienteInfo);
 
                 // 4. Redirigir al endpoint de la vista
                 return "redirect:/";

@@ -29,8 +29,8 @@ public class HttpUtil {
 
         // Interceptor que añade el encabezado de Basic Auth antes de la ejecución
         ClientHttpRequestInterceptor interceptor = (request, body_, execution) -> {
-            if (sessionData.isAuthenticated()) {
-                String auth = sessionData.getUsername() + ":" + sessionData.getPassword();
+            if (sessionData.isAuthenticatedAdmin()) {
+                String auth = sessionData.getUsernameAdmin() + ":" + sessionData.getPasswordAdmin();
                 String authHeader = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
                 // Añade el encabezado de autorización
                 request.getHeaders().add(HttpHeaders.AUTHORIZATION, authHeader);
