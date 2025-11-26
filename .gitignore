@@ -1,9 +1,2 @@
 
-postgres_data/postmaster.pid
-postgres_data/pg_stat_tmp/
-postgres_data/pg_replslot/
-postgres_data/pg_snapshots/
-postgres_data/pg_log/
-
-postgres_data/log/*.log
-
+postgres_data/
