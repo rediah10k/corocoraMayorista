@@ -1,0 +1,58 @@
+{
+  "components": [
+    {
+      "text": "# Informacion de etiquetado de inventario",
+      "type": "text",
+      "layout": {
+        "row": "Row_152drco",
+        "columns": null
+      },
+      "id": "Field_070pqxf"
+    },
+    {
+      "subtype": "date",
+      "dateLabel": "Fecha de ingreso",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_0xzm5x1",
+        "columns": null
+      },
+      "id": "Field_0r28cbl",
+      "key": "fechaIngreso"
+    },
+    {
+      "label": "Prioridad de salida",
+      "type": "number",
+      "layout": {
+        "row": "Row_157293q",
+        "columns": null
+      },
+      "id": "Field_1qy690u",
+      "key": "prioridadSalida",
+      "validate": {
+        "min": 1,
+        "max": "3",
+        "required": true
+      }
+    },
+    {
+      "label": "Ubicacion en almacen",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0hb4686",
+        "columns": null
+      },
+      "id": "Field_0znb3i9",
+      "key": "ubicacionAlmacen"
+    }
+  ],
+  "type": "default",
+  "id": "formAlmacen",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.38.1"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "schemaVersion": 19
+}

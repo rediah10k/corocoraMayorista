@@ -1,0 +1,37 @@
+{
+  "components": [
+    {
+      "text": "# Seleccione Prioridad de Envío",
+      "type": "text",
+      "layout": {
+        "row": "Row_1kxo5qu",
+        "columns": null
+      },
+      "id": "Field_054bza8"
+    },
+    {
+      "label": "Prioridad de Atención",
+      "type": "radio",
+      "layout": {
+        "row": "Row_1ixvyuj",
+        "columns": null
+      },
+      "id": "Field_0jl5m4j",
+      "key": "prioridadAtencion",
+      "conditional": {
+        "hide": "=not(solicitudValida)"
+      },
+      "readonly": false,
+      "valuesExpression": "=[\n{\n  \"label\": \"Mínima\",\n  \"value\": \"Mínima\"\n},\n{\n  \"label\": \"Baja\",\n  \"value\": \"Baja\"\n},\n{\n  \"label\": \"Media\",\n  \"value\": \"Media\"\n},\n{\n \"label\": \"Alta\",\n  \"value\": \"Alta\"\n},\n{\n\"label\": \"Crítica\",\n\"value\": \"Crítica\"\n}\n  \n]"
+    }
+  ],
+  "type": "default",
+  "id": "prioridadEnvio",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "schemaVersion": 19
+}

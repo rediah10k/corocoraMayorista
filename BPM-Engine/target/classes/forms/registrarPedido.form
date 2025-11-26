@@ -2,12 +2,12 @@
   "components": [
     {
       "label": "Número documento",
-      "type": "textfield",
+      "type": "number",
       "layout": {
-        "row": "Row_03ds1gx",
+        "row": "Row_0awwn5c",
         "columns": null
       },
-      "id": "Field_0inahwn",
+      "id": "Field_0uo2fb2",
       "key": "numeroDocumento"
     },
     {
