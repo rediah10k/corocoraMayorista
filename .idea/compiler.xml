@@ -17,7 +17,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="BPM-Engine" options="-parameters" />
-      <module name="camunda-inventario" options="" />
+      <module name="camunda-inventario" options="-parameters" />
       <module name="camunda-recepcion" options="" />
       <module name="corocora-organizacion" options="-parameters" />
       <module name="corocora-proveedores" options="-parameters" />

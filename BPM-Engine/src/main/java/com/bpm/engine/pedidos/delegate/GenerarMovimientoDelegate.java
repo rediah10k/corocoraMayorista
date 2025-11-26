@@ -29,8 +29,9 @@ public class GenerarMovimientoDelegate implements JavaDelegate {
 
 
         try {
-            Long numeroDocumento = (Long) execution.getVariable("documento");
+            Integer numeroDocInt = (Integer) execution.getVariable("numeroDocumento");
             List<ProductoSolicitado> productoSolicitados = (List<ProductoSolicitado>) execution.getVariable("productosSolicitados");
+            Long numeroDocumento = Long.valueOf(numeroDocInt);
             Boolean stock = (Boolean) execution.getVariable("stock");
 
                 ClienteResponse clienteResponse = httpUtil.enviarPeticion(

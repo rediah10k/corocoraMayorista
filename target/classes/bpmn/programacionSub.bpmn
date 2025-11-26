@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0x5km88" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.38.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:collaboration id="Collaboration_1sgqzqw">
+    <bpmn:participant id="Participant_0dn3fa5" name="Mayorista Corocora" processRef="programacionProcess" />
+  </bpmn:collaboration>
+  <bpmn:process id="programacionProcess" isExecutable="true" camunda:jobPriority="1" camunda:historyTimeToLive="180">
+    <bpmn:laneSet id="LaneSet_0kq24cv">
+      <bpmn:lane id="Lane_0rwzhbp" name="Área logística">
+        <bpmn:flowNodeRef>Activity_1ib4p4m</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1losy39</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_15rqk3d</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0kcorgl</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1rk7li9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1lr65g8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0ku0lhw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1l7n9z0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1i0f6qh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0hv06z0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_10mniy50</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1ut4hv3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0sdzqn5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_01hwl29</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:sequenceFlow id="Flow_1gyrup0" name="¿Fecha y Hora válidas?" sourceRef="Activity_1lr65g8" targetRef="Activity_10mniy50" />
+    <bpmn:sequenceFlow id="Flow_0y7dzn4" sourceRef="StartEvent_1" targetRef="Activity_1rk7li9" />
+    <bpmn:sequenceFlow id="Flow_18oh929" name="Si" sourceRef="Gateway_0hv06z0" targetRef="Activity_0kcorgl">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${fechaHoraValida == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0sy0ho7" sourceRef="Activity_15rqk3d" targetRef="Activity_1ut4hv3" />
+    <bpmn:sequenceFlow id="Flow_0lr1ci3" sourceRef="Activity_0kcorgl" targetRef="Activity_15rqk3d" />
+    <bpmn:sequenceFlow id="Flow_1u69mcw" sourceRef="Activity_1ut4hv3" targetRef="Activity_01hwl29" />
+    <bpmn:sequenceFlow id="Flow_0ag0vng" sourceRef="Event_0sdzqn5" targetRef="Activity_1l7n9z0" />
+    <bpmn:sequenceFlow id="Flow_0izm9yc" sourceRef="Activity_1l7n9z0" targetRef="Event_1i0f6qh" />
+    <bpmn:sequenceFlow id="Flow_0kself5" sourceRef="Activity_01hwl29" targetRef="Event_0ku0lhw" />
+    <bpmn:sequenceFlow id="Flow_0uks790" sourceRef="Gateway_1losy39" targetRef="Activity_1lr65g8" />
+    <bpmn:sequenceFlow id="Flow_1laamh4" name="No" sourceRef="Gateway_0hv06z0" targetRef="Gateway_1losy39">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${fechaHoraValida == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0uwrnts" sourceRef="Activity_1ib4p4m" targetRef="Gateway_1losy39" />
+    <bpmn:sequenceFlow id="Flow_01a6q2o" sourceRef="Activity_1rk7li9" targetRef="Activity_1ib4p4m" />
+    <bpmn:userTask id="Activity_1lr65g8" name="Agendar fecha y hora de envío" camunda:formRef="agendarEnvio" camunda:formRefBinding="latest">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="plazoMaximoStr">
+            <camunda:script scriptFormat="groovy">import java.text.SimpleDateFormat
+
+def dateObject = plazoMaximo
+
+if (dateObject) {
+    def outputFormat = new SimpleDateFormat("dd/MM/yy")
+    outputFormat.format(dateObject) // Groovy retorna el valor de la última línea
+} else {
+    null // Retorna null si la variable no existe
+}</camunda:script>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="fechaHoraEnvio">
+            <camunda:script scriptFormat="groovy">import java.util.Calendar
+
+def calendar = Calendar.getInstance()
+calendar.set(Calendar.HOUR_OF_DAY, 0)
+calendar.set(Calendar.MINUTE, 0)
+calendar.set(Calendar.SECOND, 0)
+calendar.set(Calendar.MILLISECOND, 0)
+return calendar.getTime()</camunda:script>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="fechaHoraValida">${!execution.hasVariable('fechaHoraValida')}</camunda:inputParameter>
+          <camunda:outputParameter name="fechaHoraInicioRecordatorio">
+            <camunda:script scriptFormat="groovy">import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.concurrent.TimeUnit
+
+def fechaString = execution.getVariable("fechaHoraEnvio")
+def fechaActual = new Date()
+
+// Limpieza de la cadena de fecha
+def cleanString = fechaString
+    .replaceAll(/([+\-])\d{2}:\d{2}$|Z$/, "")
+    .replace('T', ' ')
+
+if (!cleanString.matches(".*:\\d{2}:\\d{2}.*")) {
+    cleanString += ":00"
+}
+
+def inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+def fechaFin = inputFormat.parse(cleanString)
+
+// 1. Calcular la hora de recordatorio (Hora de Envío - 2 Horas)
+def targetTimeCalendar = Calendar.getInstance()
+targetTimeCalendar.setTime(fechaFin)
+targetTimeCalendar.add(Calendar.HOUR_OF_DAY, -2)
+
+// 2. Crear el calendario final usando la fecha de HOY
+def calendar = Calendar.getInstance()
+calendar.setTime(fechaActual)
+
+// 3. Transferir solo los componentes de tiempo calculados a la fecha de HOY
+calendar.set(Calendar.HOUR_OF_DAY, targetTimeCalendar.get(Calendar.HOUR_OF_DAY))
+calendar.set(Calendar.MINUTE, targetTimeCalendar.get(Calendar.MINUTE))
+calendar.set(Calendar.SECOND, targetTimeCalendar.get(Calendar.SECOND))
+calendar.set(Calendar.MILLISECOND, 0)
+
+def outputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+outputFormat.format(calendar.getTime())</camunda:script>
+          </camunda:outputParameter>
+          <camunda:outputParameter name="fechaHoraEnvioO">${fechaHoraEnvio}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0uks790</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gyrup0</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_1rk7li9" name="Seleccionar prioridad" camunda:formRef="prioridadEnvio" camunda:formRefBinding="latest">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_0y7dzn4</bpmn:incoming>
+      <bpmn:outgoing>Flow_01a6q2o</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:startEvent id="StartEvent_1" name="Programación de envío iniciado">
+      <bpmn:outgoing>Flow_0y7dzn4</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Activity_0kcorgl" name="Asociar fecha y hora de envio al pedido" camunda:delegateExpression="#{asignarFechaEnvio}">
+      <bpmn:incoming>Flow_18oh929</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lr1ci3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_15rqk3d" name="Notificar fecha de envío" camunda:expression="${true}" camunda:resultVariable="">
+      <bpmn:incoming>Flow_0lr1ci3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0sy0ho7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_1losy39">
+      <bpmn:incoming>Flow_0uwrnts</bpmn:incoming>
+      <bpmn:incoming>Flow_1laamh4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0uks790</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:businessRuleTask id="Activity_1ib4p4m" name="Determinar plazo máximo" camunda:resultVariable="plazoEnDias" camunda:decisionRef="plazoEnDias" camunda:mapDecisionResult="singleEntry">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="plazoMaximo">
+            <camunda:script scriptFormat="groovy">import java.util.Calendar
+import java.util.Date
+
+def calendar = Calendar.getInstance()
+def dias = execution.getVariable("plazoEnDias") as int
+
+calendar.set(Calendar.HOUR_OF_DAY, 23)
+calendar.set(Calendar.MINUTE, 59)
+calendar.set(Calendar.SECOND, 0)
+calendar.set(Calendar.MILLISECOND, 0)
+
+calendar.add(Calendar.DAY_OF_YEAR, dias)
+
+return calendar.getTime()</camunda:script>
+          </camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_01a6q2o</bpmn:incoming>
+      <bpmn:outgoing>Flow_0uwrnts</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:endEvent id="Event_0ku0lhw" name="Envio programado">
+      <bpmn:incoming>Flow_0kself5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_1l7n9z0" name="Recordar">
+      <bpmn:incoming>Flow_0ag0vng</bpmn:incoming>
+      <bpmn:outgoing>Flow_0izm9yc</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_1i0f6qh" name="Recordatorio enviado">
+      <bpmn:incoming>Flow_0izm9yc</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="Gateway_0hv06z0">
+      <bpmn:incoming>Flow_1oyqtbg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1laamh4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_18oh929</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1oyqtbg" sourceRef="Activity_10mniy50" targetRef="Gateway_0hv06z0" />
+    <bpmn:scriptTask id="Activity_10mniy50" name="Validar fecha dentro del rango acorde a prioridad" scriptFormat="groovy" camunda:resultVariable="fechaHoraValida">
+      <bpmn:incoming>Flow_1gyrup0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1oyqtbg</bpmn:outgoing>
+      <bpmn:script>import java.text.SimpleDateFormat
+import java.util.Date
+
+def plazo = execution.getVariable("plazoMaximo")
+def fechaString = execution.getVariable("fechaHoraEnvioO")
+
+println "fechaHoraEnvio = " + execution.getVariable("fechaHoraEnvioO")
+
+
+def cleanString = fechaString
+    // La regex elimina la zona horaria (+HH:MM o -HH:MM) o la Z de UTC al final.
+    .replaceAll(/([+\-])\d{2}:\d{2}$|Z$/, "") 
+    // Reemplaza el separador 'T' por un espacio
+    .replace('T', ' ') 
+
+// Asegurarse de que la cadena tenga segundos si solo tiene HH:MM
+if (!cleanString.matches(".:\\d{2}:\\d{2}.")) {
+    cleanString += ":00"
+}
+
+// 2. Usar el formato limpio para parsear la fecha
+def inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+def fechaDate = inputFormat.parse(cleanString)
+
+return !fechaDate.after(plazo)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:task id="Activity_1ut4hv3" name="Confirmar preparación de envío">
+      <bpmn:incoming>Flow_0sy0ho7</bpmn:incoming>
+      <bpmn:outgoing>Flow_1u69mcw</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:boundaryEvent id="Event_0sdzqn5" cancelActivity="false" attachedToRef="Activity_1ut4hv3">
+      <bpmn:outgoing>Flow_0ag0vng</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1cv9ehm">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R/${fechaHoraInicioRecordatorio}/PT1M</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:serviceTask id="Activity_01hwl29" name="Generar guía de despacho" camunda:expression="${true}">
+      <bpmn:incoming>Flow_1u69mcw</bpmn:incoming>
+      <bpmn:outgoing>Flow_0kself5</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1sgqzqw">
+      <bpmndi:BPMNShape id="Participant_0dn3fa5_di" bpmnElement="Participant_0dn3fa5" isHorizontal="true">
+        <dc:Bounds x="160" y="40" width="1860" height="280" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0rwzhbp_di" bpmnElement="Lane_0rwzhbp" isHorizontal="true">
+        <dc:Bounds x="190" y="40" width="1830" height="280" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0acw2o7_di" bpmnElement="Activity_1ib4p4m">
+        <dc:Bounds x="600" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1losy39_di" bpmnElement="Gateway_1losy39" isMarkerVisible="true">
+        <dc:Bounds x="745" y="155" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zi4li3_di" bpmnElement="Activity_15rqk3d">
+        <dc:Bounds x="1280" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1epeuq1" bpmnElement="Activity_0kcorgl">
+        <dc:Bounds x="1160" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="242" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="218" y="216" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1yv2ac9_di" bpmnElement="Activity_1rk7li9">
+        <dc:Bounds x="430" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13v8omr_di" bpmnElement="Activity_1lr65g8">
+        <dc:Bounds x="810" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ku0lhw_di" bpmnElement="Event_0ku0lhw">
+        <dc:Bounds x="1832" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1806" y="145" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06kllms_di" bpmnElement="Activity_1l7n9z0">
+        <dc:Bounds x="1560" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1i0f6qh_di" bpmnElement="Event_1i0f6qh">
+        <dc:Bounds x="1752" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1739" y="275" width="63" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0hv06z0_di" bpmnElement="Gateway_0hv06z0" isMarkerVisible="true">
+        <dc:Bounds x="1105" y="145" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0yy4ux0_di" bpmnElement="Activity_10mniy50">
+        <dc:Bounds x="960" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1yx5av8_di" bpmnElement="Activity_1ut4hv3">
+        <dc:Bounds x="1440" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1onnh0i" bpmnElement="Activity_01hwl29" color:background-color="" color:border-color="">
+        <dc:Bounds x="1630" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0wq8b6i_di" bpmnElement="Event_0sdzqn5">
+        <dc:Bounds x="1442" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_01a6q2o_di" bpmnElement="Flow_01a6q2o">
+        <di:waypoint x="530" y="180" />
+        <di:waypoint x="600" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0uwrnts_di" bpmnElement="Flow_0uwrnts">
+        <di:waypoint x="700" y="180" />
+        <di:waypoint x="745" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1laamh4_di" bpmnElement="Flow_1laamh4">
+        <di:waypoint x="1130" y="195" />
+        <di:waypoint x="1130" y="260" />
+        <di:waypoint x="770" y="260" />
+        <di:waypoint x="770" y="205" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1133" y="213" width="14" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0uks790_di" bpmnElement="Flow_0uks790">
+        <di:waypoint x="795" y="180" />
+        <di:waypoint x="810" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gyrup0_di" bpmnElement="Flow_1gyrup0">
+        <di:waypoint x="910" y="180" />
+        <di:waypoint x="960" y="180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1153" y="186" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18oh929_di" bpmnElement="Flow_18oh929">
+        <di:waypoint x="1130" y="145" />
+        <di:waypoint x="1130" y="120" />
+        <di:waypoint x="1160" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1130" y="103" width="10" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0sy0ho7_di" bpmnElement="Flow_0sy0ho7">
+        <di:waypoint x="1380" y="120" />
+        <di:waypoint x="1440" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0y7dzn4_di" bpmnElement="Flow_0y7dzn4">
+        <di:waypoint x="278" y="180" />
+        <di:waypoint x="430" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1u69mcw_di" bpmnElement="Flow_1u69mcw">
+        <di:waypoint x="1540" y="120" />
+        <di:waypoint x="1630" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ag0vng_di" bpmnElement="Flow_0ag0vng">
+        <di:waypoint x="1460" y="178" />
+        <di:waypoint x="1460" y="260" />
+        <di:waypoint x="1560" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0izm9yc_di" bpmnElement="Flow_0izm9yc">
+        <di:waypoint x="1660" y="250" />
+        <di:waypoint x="1752" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kself5_di" bpmnElement="Flow_0kself5">
+        <di:waypoint x="1730" y="120" />
+        <di:waypoint x="1832" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lr1ci3_di" bpmnElement="Flow_0lr1ci3">
+        <di:waypoint x="1260" y="120" />
+        <di:waypoint x="1280" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1oyqtbg_di" bpmnElement="Flow_1oyqtbg">
+        <di:waypoint x="1060" y="180" />
+        <di:waypoint x="1115" y="180" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

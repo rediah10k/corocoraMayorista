@@ -1,0 +1,53 @@
+{
+  "components": [
+    {
+      "text": "# Analisis de calidad de lote",
+      "type": "text",
+      "layout": {
+        "row": "Row_0gq0d19",
+        "columns": null
+      },
+      "id": "Field_1bs9bkv"
+    },
+    {
+      "subtype": "date",
+      "dateLabel": "Fecha de vencimiento",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_0r5yhr1",
+        "columns": null
+      },
+      "id": "Field_1ikn6n2",
+      "key": "fechaVencimiento"
+    },
+    {
+      "label": "¿La caja presenta signos fuertes de maltrato?",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0ij2dsi",
+        "columns": null
+      },
+      "id": "Field_0hl9ixw",
+      "key": "estadoFisico"
+    },
+    {
+      "label": "¿El sello de la caja se encuentra intacto?",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_01pntse",
+        "columns": null
+      },
+      "id": "Field_0xx4268",
+      "key": "estadoSello"
+    }
+  ],
+  "type": "default",
+  "id": "CalidadForm",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.38.1"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "schemaVersion": 19
+}

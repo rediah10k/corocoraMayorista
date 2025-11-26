@@ -1,0 +1,37 @@
+{
+  "components": [
+    {
+      "label": "Select",
+      "values": [
+        {
+          "label": "Rotacion Alta",
+          "value": "A"
+        },
+        {
+          "label": "Rotacion Baja",
+          "value": "B"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "Row_1eq52t7",
+        "columns": null
+      },
+      "id": "Field_02ncbu9",
+      "key": "tipoRotacion",
+      "defaultValue": "Rotacion Alta",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "formRotacion",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.38.1"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "schemaVersion": 19
+}
