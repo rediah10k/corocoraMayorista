@@ -5,6 +5,10 @@
   </collaboration>
   <process id="corocoraMayorista" name="pedidoProcess" isExecutable="true" camunda:historyTimeToLive="60">
     <laneSet id="LaneSet_0feg4b2">
+<<<<<<< HEAD
+      <lane id="Lane_1dhzro0" name="CLIENTE">
+        <flowNodeRef>StartEvent_1y45yut</flowNodeRef>
+=======
       <lane id="Lane_1a36b90" name="ÁREA VENTAS">
         <flowNodeRef>ExclusiveGateway_15hu1pt</flowNodeRef>
         <flowNodeRef>Activity_0rdh2dm</flowNodeRef>
@@ -18,9 +22,9 @@
       <lane id="Lane_145hwax" name="ÁREA LOGISTICA">
         <flowNodeRef>Activity_1kyig4b</flowNodeRef>
         <flowNodeRef>Activity_151oyoe</flowNodeRef>
+>>>>>>> 46ceb0b5be4a4fb550edd4a70fdc039a8e3505bc
       </lane>
       <lane id="Lane_1kco2od" name="TRANSPORTE">
-        <flowNodeRef>Activity_0ji2y08</flowNodeRef>
         <flowNodeRef>Activity_05asviw</flowNodeRef>
         <flowNodeRef>Activity_00rsnhs</flowNodeRef>
         <flowNodeRef>Gateway_13l3zm9</flowNodeRef>
@@ -29,20 +33,13 @@
         <flowNodeRef>Gateway_0el7ev1</flowNodeRef>
         <flowNodeRef>Activity_1ilqsi3</flowNodeRef>
         <flowNodeRef>Activity_03r9qeg</flowNodeRef>
+        <flowNodeRef>Activity_0ji2y08</flowNodeRef>
       </lane>
       <lane id="Lane_1dhzro0" name="CLIENTE">
         <flowNodeRef>StartEvent_1y45yut</flowNodeRef>
+        <flowNodeRef>Task_1hcentk</flowNodeRef>
       </lane>
     </laneSet>
-    <userTask id="Activity_0ji2y08" name="Cargar productos">
-      <extensionElements>
-        <camunda:formData>
-          <camunda:formField id="MensajeCarga" label="Info" type="string" defaultValue="Los productos estan siendo cargados en transportadora..." />
-        </camunda:formData>
-      </extensionElements>
-      <incoming>Flow_13n1ghs</incoming>
-      <outgoing>Flow_0pdqqzf</outgoing>
-    </userTask>
     <userTask id="Activity_05asviw" name="Embalar productos">
       <extensionElements>
         <camunda:formData>
@@ -138,12 +135,10 @@
     <userTask id="Activity_1ymz5as" name="Consultar factura">
       <extensionElements>
         <camunda:formData>
-          <camunda:formField id="mensajeUrl" label="Aqui puedes ver tu factura de pago" type="string" defaultValue="${pdfUrl}" />
-          <camunda:formField id="mensajeCS" label="Costo subtotal" type="string" defaultValue="${precioTotal}">
+          <camunda:formField id="mensajeUrl" label="URL Factura Generada" type="string" defaultValue="${pdfUrl}" />
+          <camunda:formField id="mensajeAhorro" label="Informacion" type="string" defaultValue="${String.format(&#39;Total: $%,d - Sin IVA: $%,d - Si fueses asociado ahorrarías: $%,d&#39;, precioTotal, precioSinIVA, promoPosible)}">
             <camunda:validation />
           </camunda:formField>
-          <camunda:formField id="mensajeCCI" label="Costo con IVA" type="string" defaultValue="${precioSinIVA}" />
-          <camunda:formField id="mensajeAh" label="Ahorro potencial con asociacion pro" type="string" defaultValue="${promoPosible}" />
         </camunda:formData>
       </extensionElements>
       <incoming>Flow_14zmzi6</incoming>
@@ -185,9 +180,30 @@ return jsonResponse.pdfUrl</camunda:script>
       <incoming>Flow_0fw5cpw</incoming>
       <outgoing>Flow_1vj3xc7</outgoing>
     </serviceTask>
-    <startEvent id="StartEvent_1y45yut" name="Solicitud de productos iniciada" camunda:formRef="registrarPedido" camunda:formRefBinding="latest" camunda:initiator="">
+<<<<<<< HEAD
+    <userTask id="Activity_1ymz5as" name="Consultar factura">
+      <extensionElements>
+        <camunda:formData>
+          <camunda:formField id="mensajeUrl" label="URL Factura Generada" type="string" defaultValue="${pdfUrl}" />
+        </camunda:formData>
+      </extensionElements>
+      <incoming>Flow_14zmzi6</incoming>
+      <outgoing>Flow_1sxu8pk</outgoing>
+    </userTask>
+    <userTask id="Activity_0ji2y08" name="Cargar productos">
+      <extensionElements>
+        <camunda:formData>
+          <camunda:formField id="MensajeCarga" label="Info" type="string" defaultValue="Los productos estan siendo cargados en transportadora..." />
+        </camunda:formData>
+      </extensionElements>
+      <incoming>Flow_13n1ghs</incoming>
+      <outgoing>Flow_0pdqqzf</outgoing>
+    </userTask>
+    <startEvent id="StartEvent_1y45yut" name="Solicitud de productos recibida" camunda:formRef="registrarPedido" camunda:formRefBinding="latest" camunda:initiator="">
       <outgoing>SequenceFlow_0h21x7r</outgoing>
     </startEvent>
+=======
+>>>>>>> 46ceb0b5be4a4fb550edd4a70fdc039a8e3505bc
   </process>
   <message id="Message_16due5g" name="Message_16due5g" />
   <bpmndi:BPMNDiagram id="BpmnDiagram_1">
@@ -196,25 +212,34 @@ return jsonResponse.pdfUrl</camunda:script>
         <omgdc:Bounds x="160" y="85" width="2680" height="990" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1dhzro0_di" bpmnElement="Lane_1dhzro0" isHorizontal="true">
-        <omgdc:Bounds x="190" y="85" width="2650" height="140" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1kco2od_di" bpmnElement="Lane_1kco2od" isHorizontal="true">
-        <omgdc:Bounds x="190" y="715" width="2650" height="360" />
+      <bpmndi:BPMNShape id="Lane_1a36b90_di" bpmnElement="Lane_1a36b90" isHorizontal="true">
+        <omgdc:Bounds x="190" y="225" width="2650" height="300" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_145hwax_di" bpmnElement="Lane_145hwax" isHorizontal="true">
         <omgdc:Bounds x="190" y="525" width="2650" height="190" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1a36b90_di" bpmnElement="Lane_1a36b90" isHorizontal="true">
-        <omgdc:Bounds x="190" y="225" width="2650" height="300" />
+      <bpmndi:BPMNShape id="Lane_1kco2od_di" bpmnElement="Lane_1kco2od" isHorizontal="true">
+        <omgdc:Bounds x="190" y="715" width="2650" height="360" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1dhzro0_di" bpmnElement="Lane_1dhzro0" isHorizontal="true">
+        <omgdc:Bounds x="190" y="85" width="2650" height="140" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+<<<<<<< HEAD
+=======
+      <bpmndi:BPMNShape id="StartEvent_1y45yut_di" bpmnElement="StartEvent_1y45yut">
+        <omgdc:Bounds x="402" y="137" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="378" y="180" width="90" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0mwlnnj_di" bpmnElement="Activity_0ji2y08">
         <omgdc:Bounds x="1690" y="865" width="100" height="80" />
       </bpmndi:BPMNShape>
+>>>>>>> 46ceb0b5be4a4fb550edd4a70fdc039a8e3505bc
       <bpmndi:BPMNShape id="Activity_19giy7b_di" bpmnElement="Activity_05asviw">
         <omgdc:Bounds x="1530" y="865" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -222,6 +247,13 @@ return jsonResponse.pdfUrl</camunda:script>
         <omgdc:Bounds x="1980" y="985" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+<<<<<<< HEAD
+=======
+      <bpmndi:BPMNShape id="Activity_1c6qxie_di" bpmnElement="Task_1hcentk">
+        <omgdc:Bounds x="470" y="115" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+>>>>>>> 46ceb0b5be4a4fb550edd4a70fdc039a8e3505bc
       <bpmndi:BPMNShape id="ExclusiveGateway_15hu1pt_di" bpmnElement="ExclusiveGateway_15hu1pt" isMarkerVisible="true">
         <omgdc:Bounds x="915" y="360" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -255,6 +287,30 @@ return jsonResponse.pdfUrl</camunda:script>
         <omgdc:Bounds x="1270" y="275" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+<<<<<<< HEAD
+      <bpmndi:BPMNShape id="Activity_0mwlnnj_di" bpmnElement="Activity_0ji2y08">
+        <omgdc:Bounds x="1680" y="860" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0bptmoi_di" bpmnElement="StartEvent_1y45yut">
+        <omgdc:Bounds x="432" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="424" y="175" width="58" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0h21x7r_di" bpmnElement="SequenceFlow_0h21x7r">
+        <omgdi:waypoint x="468" y="150" />
+        <omgdi:waypoint x="490" y="150" />
+        <omgdi:waypoint x="490" y="380" />
+        <omgdi:waypoint x="640" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0hjdu92" bpmnElement="Flow_13n1ghs">
+        <omgdi:waypoint x="1630" y="900" />
+        <omgdi:waypoint x="1680" y="900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pdqqzf_di" bpmnElement="Flow_0pdqqzf">
+        <omgdi:waypoint x="1780" y="900" />
+        <omgdi:waypoint x="1825" y="900" />
+=======
       <bpmndi:BPMNShape id="Activity_04eswua_di" bpmnElement="Activity_176j83e">
         <omgdc:Bounds x="1120" y="275" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -284,17 +340,9 @@ return jsonResponse.pdfUrl</camunda:script>
       <bpmndi:BPMNShape id="Activity_0s1rwo4_di" bpmnElement="Activity_03r9qeg">
         <omgdc:Bounds x="2340" y="865" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="StartEvent_1y45yut_di" bpmnElement="StartEvent_1y45yut">
-        <omgdc:Bounds x="402" y="137" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds x="378" y="180" width="90" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0h21x7r_di" bpmnElement="SequenceFlow_0h21x7r">
         <omgdi:waypoint x="438" y="155" />
-        <omgdi:waypoint x="534" y="155" />
-        <omgdi:waypoint x="534" y="385" />
-        <omgdi:waypoint x="640" y="385" />
+        <omgdi:waypoint x="470" y="155" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_0hjdu92" bpmnElement="Flow_13n1ghs">
         <omgdi:waypoint x="1630" y="905" />
@@ -303,6 +351,7 @@ return jsonResponse.pdfUrl</camunda:script>
       <bpmndi:BPMNEdge id="Flow_0pdqqzf_di" bpmnElement="Flow_0pdqqzf">
         <omgdi:waypoint x="1790" y="905" />
         <omgdi:waypoint x="1825" y="905" />
+>>>>>>> 46ceb0b5be4a4fb550edd4a70fdc039a8e3505bc
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_07ydp5p_di" bpmnElement="Flow_07ydp5p">
         <omgdi:waypoint x="1440" y="635" />
@@ -320,6 +369,15 @@ return jsonResponse.pdfUrl</camunda:script>
         <omgdi:waypoint x="2550" y="1025" />
         <omgdi:waypoint x="2550" y="930" />
       </bpmndi:BPMNEdge>
+<<<<<<< HEAD
+=======
+      <bpmndi:BPMNEdge id="SequenceFlow_0wnb4ke_di" bpmnElement="SequenceFlow_0wnb4ke">
+        <omgdi:waypoint x="570" y="155" />
+        <omgdi:waypoint x="610" y="155" />
+        <omgdi:waypoint x="610" y="385" />
+        <omgdi:waypoint x="640" y="385" />
+      </bpmndi:BPMNEdge>
+>>>>>>> 46ceb0b5be4a4fb550edd4a70fdc039a8e3505bc
       <bpmndi:BPMNEdge id="Flow_1y9v2w7_di" bpmnElement="Flow_1y9v2w7">
         <omgdi:waypoint x="870" y="385" />
         <omgdi:waypoint x="915" y="385" />
