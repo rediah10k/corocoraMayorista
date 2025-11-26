@@ -26,6 +26,10 @@ public class Pedido {
     @JoinColumn(name = "cliente_id", nullable = false, foreignKey = @ForeignKey(name = "fk_envio_cliente"))
     private Cliente cliente;
 
+
+
+
+
     @Column(name = "estado", nullable = false, length = 50)
     private String estado;
 

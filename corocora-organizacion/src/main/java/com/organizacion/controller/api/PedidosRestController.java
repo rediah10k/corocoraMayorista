@@ -20,13 +20,6 @@ public class PedidosRestController {
         private PedidosService pedidosService;
 
 
-        @PostMapping("/proceso/iniciar")
-        ResponseEntity<Void> iniciarPedido(@AuthenticationPrincipal Cliente cliente,@RequestBody String productosStr){
-            String productosLimpios = productosStr.replace("\r", "");
-
-            return ResponseEntity.ok().build();
-        }
-
         @PostMapping("validar")
         ResponseEntity<Map<String, Object>> validarStockProductos(@RequestBody List<ProductoSolicitado> productoSolicitadoList){
 

@@ -1,0 +1,33 @@
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+
+<div th:fragment="navbar">
+
+    <style>
+        /* ESTILO CLAVE: Fondo con color E32F0E */
+        .bg-custom-blue-dark {
+                background-color: #E32F0E !important;
+        }
+
+        /* Los estilos opcionales del nav-link se eliminan ya que no hay links */
+    </style>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-custom-blue-dark sticky-top shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand fs-4 fw-bold" th:href="@{/}">Corocora Mayorista Administradores</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

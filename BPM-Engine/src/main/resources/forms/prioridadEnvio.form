@@ -10,6 +10,16 @@
       "id": "Field_054bza8"
     },
     {
+      "label": "Nombre Cliente",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1dsy84b",
+        "columns": null
+      },
+      "id": "Field_1coxvvu",
+      "key": "clienteNombreSub"
+    },
+    {
       "label": "Prioridad de Atención",
       "type": "radio",
       "layout": {

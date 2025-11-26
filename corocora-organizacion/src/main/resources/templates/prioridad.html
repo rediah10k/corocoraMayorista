@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignar Prioridad</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout_fragments :: navbar}"></div>
+
+<main class="container my-4">
+
+    <h2 class="mb-4">Asignar Prioridad al Pedido</h2>
+    <p class="lead">ID de Proceso Raíz: <strong th:text="${rootProcessId}">[ID_RAIZ]</strong></p>
+    <p class="lead text-muted small">ID de Tarea: <span th:text="${taskId}">[ID_TAREA]</span></p>
+
+    <hr/>
+
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-light">
+            Detalles del Cliente y Pedido
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <strong>Cliente:</strong> <span th:text="${clienteNombre}">Nombre del Cliente</span>
+            </li>
+            <li class="list-group-item">
+                <strong>Detalle del Pedido:</strong> <code th:text="${detallePedido}">P8,Producto,1000,2,2000;</code>
+            </li>
+        </ul>
+    </div>
+
+    <form method="POST" th:action="@{/asignar-prioridad}" class="card p-4 shadow">
+
+        <input type="hidden" name="taskId" th:value="${taskId}" />
+
+        <div class="mb-3">
+            <label class="form-label">Selecciona la nueva Prioridad:</label>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="nuevaPrioridad" id="prioridadMinima" value="Mínima" required>
+                <label class="form-check-label" for="prioridadMinima">Mínima</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="nuevaPrioridad" id="prioridadBaja" value="Baja" required>
+                <label class="form-check-label" for="prioridadBaja">Baja</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="nuevaPrioridad" id="prioridadMedia" value="Media" required checked>
+                <label class="form-check-label" for="prioridadMedia">Media</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="nuevaPrioridad" id="prioridadAlta" value="Alta" required>
+                <label class="form-check-label" for="prioridadAlta">Alta</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="nuevaPrioridad" id="prioridadCritica" value="Crítica" required>
+                <label class="form-check-label" for="prioridadCritica">Crítica</label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-custom-main mt-3">
+            Completar Tarea y Asignar Prioridad
+        </button>
+
+    </form>
+
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

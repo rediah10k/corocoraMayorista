@@ -36,7 +36,7 @@
   "id": "registrarPedido",
   "exporter": {
     "name": "Camunda Modeler",
-    "version": "5.38.1"
+    "version": "5.39.0"
   },
   "executionPlatform": "Camunda Platform",
   "executionPlatformVersion": "7.23.0",

@@ -27,7 +27,7 @@ public class ClienteServiceImpl implements ClienteService {
         if(cliente != null){
             return ClienteResponse.builder()
                     .id(cliente.getId())
-                    .documento(cliente.getDocumento())
+                    .numeroDocumento(cliente.getDocumento())
                     .nombres(cliente.getNombres())
                     .saldo(cliente.getSaldo())
                     .build();
@@ -43,7 +43,7 @@ public class ClienteServiceImpl implements ClienteService {
         if(cliente != null){
             return ClienteResponse.builder()
                     .id(cliente.getId())
-                    .documento(cliente.getDocumento())
+                    .numeroDocumento(cliente.getDocumento())
                     .nombres(cliente.getNombres())
                     .saldo(cliente.getSaldo())
                     .build();

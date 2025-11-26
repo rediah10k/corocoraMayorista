@@ -1,22 +1,20 @@
 package com.clientes.controller;
 
 
-import com.clientes.config.HttpUtil;
+import com.clientes.config.UserSessionData;
 import com.clientes.dto.ProductoResponse;
-import com.clientes.service.CamundaPedidosService;
+import com.clientes.service.CamundaService;
 import com.clientes.service.ProductoService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,15 +25,18 @@ public class PedidosController {
 
     private final ObjectMapper objectMapper;
     private ProductoService productoService;
-    private CamundaPedidosService camundaPedidosService;
+    private CamundaService camundaService;
 
-    @Value("${corocora.organizacion.host}")
-    private String organizacionBaseUrl;
+    @Autowired
+    private UserSessionData sessionData;
 
-    public PedidosController(ObjectMapper objectMapper, ProductoService productoService, CamundaPedidosService camundaPedidosService) {
+    @Value("${camunda.pedidos.process.name}")
+    private String pedidosProcessName;
+
+    public PedidosController(ObjectMapper objectMapper, ProductoService productoService, CamundaService camundaService) {
         this.objectMapper = objectMapper;
         this.productoService = productoService;
-        this.camundaPedidosService = camundaPedidosService;
+        this.camundaService = camundaService;
     }
 
     @GetMapping("pedidos")
@@ -112,8 +113,24 @@ public class PedidosController {
         public String finalizarPedido(@RequestParam("itemsCadena") String itemsCadena) {
 
 
-            camundaPedidosService.iniciarNuevoPedido(
-                    itemsCadena
+            Map<String, Object> variables = new HashMap<>();
+
+            Map<String, Object> documentoVar = new HashMap<>();
+            documentoVar.put("value", sessionData.getClienteInfo().getNumeroDocumento());
+            documentoVar.put("type", "Long");
+            variables.put("numeroDocumento", documentoVar);
+
+
+            Map<String, Object> productosVar = new HashMap<>();
+            productosVar.put("value", itemsCadena);
+            productosVar.put("type", "String");
+            variables.put("productos", productosVar);
+
+
+            String processId = camundaService.iniciarNuevoProceso(
+                    pedidosProcessName,
+                    variables
+
             );
 
             // 3. Redirecciona o retorna una vista de éxito

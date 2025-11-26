@@ -29,7 +29,8 @@ public class GenerarMovimientoDelegate implements JavaDelegate {
 
 
         try {
-            Long numeroDocumento = (Long) execution.getVariable("documento");
+            String numeroDocumentoStr = String.valueOf(execution.getVariable("numeroDocumento"));
+            Long numeroDocumento = Long.parseLong(numeroDocumentoStr);
             List<ProductoSolicitado> productoSolicitados = (List<ProductoSolicitado>) execution.getVariable("productosSolicitados");
             Boolean stock = (Boolean) execution.getVariable("stock");
 

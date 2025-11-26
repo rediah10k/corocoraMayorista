@@ -31,7 +31,7 @@ public class ClienteRestController {
         return ResponseEntity.ok(
                 ClienteResponse.builder()
                         .id(cliente.getId())
-                        .documento(cliente.getDocumento())
+                        .numeroDocumento(cliente.getDocumento())
                         .nombres(cliente.getNombres())
                         .saldo(cliente.getSaldo())
                         .build()

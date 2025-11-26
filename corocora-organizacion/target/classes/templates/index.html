@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <style>
+        .text-custom-main {
+            color: #E32F0E !important;
+        }
+        .btn-custom-main {
+            background-color: #E32F0E !important;
+            border-color: #E32F0E !important;
+            color: white !important;
+        }
+        .btn-custom-main:hover {
+            background-color: #cc2a0c !important; /* Un poco más oscuro para el hover */
+            border-color: #cc2a0c !important;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{fragments/layout_fragments :: navbar}"></div>
+
+
+<main class="container my-4">
+
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <h1 class="display-5 fw-bold" th:text="'Bienvenido/a, ' + ${clienteInfo.nombres}">Bienvenido/a</h1>
+        <p class="fs-4">
+            Tu panel de control y estado de cuenta.
+        </p>
+        <p th:if="${esAdmin}" class="text-danger">
+            Modo Administrador Activo.
+        </p>
+    </div>
+
+    <h2 class="mb-3">Nuevos Pedidos</h2>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        <div class="col" th:each="tareaInfo : ${nuevosPedidos}">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+
+                    <h5 class="card-title text-custom-main">Proceso Raíz N°: <span th:text="${tareaInfo.rootProcessId}">ID_RAIZ</span></h5>
+
+                    <p class="card-text text-muted small">Tarea ID: <span th:text="${tareaInfo.taskId}">ID_TAREA</span></p>
+
+                    <a th:href="@{/{id}(id=${tareaInfo.rootProcessId}, taskId=${tareaInfo.taskId})}" class="btn btn-sm btn-custom-main mt-2">
+                        Ver Detalles
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12" th:if="${#lists.isEmpty(nuevosPedidos)}">
+            <div class="alert alert-info" role="alert">
+                No hay nuevos pedidos pendientes.
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
